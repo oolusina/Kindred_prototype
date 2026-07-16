@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+@theme {
+  /* Kindred design tokens (from Figma "Informed Patient" file) */
+  --color-canvas: #f9f2e4; /* secondary/500 — warm cream app background */
+  --color-canvas-700: #a9a59b; /* secondary/700 — muted text on dark */
+  --color-accent: #002b8f; /* accent/500 — deep blue */
+  --color-accent-50: #eef1fb;
+  --color-accent-100: #dfe4f6;
+  --color-accent-200: #c3cdec;
+  --color-accent-300: #7a91c5;
+  --color-accent-subtle: #22468d; /* accent/ondarksubtle — chips on blue header */
+  --color-ink: #141419; /* neutral/900 */
+  --color-ink-700: #404040;
+  --color-ink-600: #525252;
+  --color-ink-500: #737373; /* neutral/500 */
+  --color-ink-400: #a3a3a3; /* neutral/400 */
+  --color-ink-300: #d4d4d4;
+  --color-ink-200: #e5e5e5;
+  --color-ink-100: #f5f5f5;
+  --color-card: #ffffff; /* neutral/50 */
+
+  --font-sans: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+  --font-serif: "Lora", Georgia, serif;
+
+  --radius-card: 18px;
+  --radius-card-lg: 20px;
+  --radius-header: 36px;
+  --radius-nav: 32px;
+
+  --shadow-card: 0px 4px 14px 0px rgba(0, 43, 143, 0.05);
+  --shadow-nav: 0px 8px 11px rgba(0, 0, 0, 0.22);
+}
+
+html,
+body {
+  margin: 0;
+  background: #e9e5dd;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Hide scrollbars inside the phone frame — screens scroll like a native app */
+.app-scroll {
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+.app-scroll::-webkit-scrollbar {
+  display: none;
+}
