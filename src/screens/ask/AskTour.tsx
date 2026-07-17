@@ -41,13 +41,13 @@ export const ASK_TOUR_STEPS: Record<
   },
   4: {
     title: 'Check the sources',
-    body: 'Every answer shows where it comes from — tap the pill to read sources reviewed by clinicians.',
+    body: 'Medical answers cite vetted guidance — tap Open source to read what clinicians reviewed.',
     secondary: 'Back',
     primary: 'Next',
   },
   5: {
     title: 'Made personal',
-    body: 'This card connects the answer to your own labs and readings — and one tap adds it to your appointment prep.',
+    body: 'My Data connects the answer to your own labs and readings — only you can see this view.',
     secondary: 'Back',
     primary: 'Finish',
   },

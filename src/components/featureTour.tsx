@@ -23,6 +23,7 @@ export function useSpotlightBox(
   targetRef: RefObject<HTMLElement | null>,
   active: boolean,
   pad = 6,
+  remeasureKey?: string | number,
 ): SpotlightBox | null {
   const [box, setBox] = useState<SpotlightBox | null>(null)
 
@@ -50,17 +51,20 @@ export function useSpotlightBox(
     }
 
     measure()
+    // Remeasure after scroll/layout settles when the target just mounted.
+    const raf = requestAnimationFrame(measure)
     const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(measure) : null
     if (rootRef.current) ro?.observe(rootRef.current)
     if (targetRef.current) ro?.observe(targetRef.current)
     window.addEventListener('resize', measure)
     window.addEventListener('scroll', measure, true)
     return () => {
+      cancelAnimationFrame(raf)
       ro?.disconnect()
       window.removeEventListener('resize', measure)
       window.removeEventListener('scroll', measure, true)
     }
-  }, [rootRef, targetRef, active, pad])
+  }, [rootRef, targetRef, active, pad, remeasureKey])
 
   return box
 }
