@@ -5,31 +5,45 @@ Figma fileKey `EPuCY2IkPSDtgpYEdark5n`. Each line: route → Figma nodeId → fr
 
 ## Flow: onboarding (src/screens/onboarding/)
 
+Section: Figma `3028:8239` · Onboarding Flow.
+
+Verify path: review-confirm → all-set (choose-syncs sheet closed by default) →
+share-insights → verified → tour-prep → tour-community → tour-timeline →
+tour-control (Finish) → `/home`.
+
+Skip verify: Later → verify-later → rejoin at tour-prep → … → tour-control → `/home`.
+
 - `/` and `/onboarding/landing` → 2882:6752 · Landing Page
-- `/onboarding/intro` → 2503:6451 · Onboarding · 01 Intro
-- `/onboarding/video` → 2506:4853 · 02 Video walkthrough
-- `/onboarding/conditions` → 2506:5782 · 03 Your conditions
 - `/onboarding/intro-community` → 2759:6491 · Intro 1 — Community
 - `/onboarding/intro-vault` → 2759:6546 · Intro 2 — Health Vault
 - `/onboarding/intro-ai` → 2759:6601 · Intro 3 — Medically Trained AI
+- `/onboarding/video` → 2969:8199 · 02 Video walkthrough
+- `/onboarding/conditions` → 2506:5782 · 03 Your conditions
 - `/onboarding/tour-welcome` → 2502:4285 · 04 Home — Tour welcome
 - `/onboarding/tour-verify` → 2649:6211 · 05 Tour 1/5 — Verify diagnosis
 - `/onboarding/tour-add` → 2655:5908 · 06 Tour 2/5 — Tap + to add proof
-- `/onboarding/verify-later` → 2657:5530 · 06B If skipped — Verify later
 - `/onboarding/verify-add-menu` → 2655:6043 · 07 Verify — Add menu (modal)
+- `/onboarding/source-hub` → 2753:6387 · Source Hub
 - `/onboarding/find-portal` → 2502:4384 · 08 Verify — Find your portal
 - `/onboarding/authorize` → 2753:6323 · Connect · Authorize (browser)
-- `/onboarding/upload-document` → 2514:4931 · 10 Verify — Upload a document
-- `/onboarding/review-confirm` → 2514:5878 · 11 Verify — Review & confirm
 - `/onboarding/verified` → 2503:4528 · 12 Diagnosis verified
-- `/onboarding/all-set` → 2940:8301 · 16 You're all set (latest version)
-- `/onboarding/choose-syncs` → 2693:5667 · 16B Choose what syncs
-- `/onboarding/ask-locked` → 2503:4951 · 18 Ask AI — Locked
+- `/onboarding/tour-prep` → 2941:8654 · Dr prep
+- `/onboarding/tour-community` → 2941:8824 · Community QA
+- `/onboarding/tour-timeline` → 2941:9008 · Timeline of You
+- `/onboarding/tour-control` → 2950:8118 · Control is Yours
+- `/onboarding/all-set` → 2516:6035 · 16 You're all set (16B sheet overlay, closed by default)
+- `/onboarding/share-insights` → 2940:8140 · Upload · Share for insights → verified
 
-Flow order: landing → intro → video → conditions → intro-community → intro-vault →
-intro-ai → tour-welcome → tour-verify → tour-add (skip ⇒ verify-later) →
-verify-add-menu → find-portal → authorize → upload-document → review-confirm →
-verified → choose-syncs → all-set → `/home`.
+Also: `/onboarding/verify-later` → 2657:5530 · 06B If skipped — Verify later;
+`/onboarding/upload-document` → 2514:4931; `/onboarding/review-confirm` → 2514:5878.
+Retained off-path: `/onboarding/intro`, `/onboarding/ask-locked`.
+
+Intro: landing → intro-community → intro-vault → intro-ai → video → conditions →
+tour-welcome → tour-verify → tour-add → (verify branch or skip).
+
+Verify branch: add-menu → source-hub / upload → authorize or review-confirm →
+all-set → share-insights → verified → tour-prep → tour-community → tour-timeline →
+tour-control → `/home`.
 
 ## Flow: home (src/screens/home/)
 

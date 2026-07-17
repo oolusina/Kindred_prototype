@@ -1,32 +1,26 @@
-# React + TypeScript + Vite
+# Kindred prototype
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Interactive mobile prototype of the **Informed Patient** Figma file — Kindred app flows for laptop and phone.
 
-Currently, two official plugins are available:
+## Launch
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+cd ~/Projects/Kindred-prototype
+npm install
+npm run dev -- --host 0.0.0.0 --port 5173
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+- Laptop: http://localhost:5173/
+- Phone (same Wi‑Fi): http://\<your-mac-ip\>:5173/
+
+The app opens at onboarding. After “You’re all set”, you land on Home. Bottom tabs: Home · Community · Timeline · Learn. The center **+** opens Add.
+
+## Stack
+
+Vite + React 19 + TypeScript + Tailwind CSS v4 + react-router-dom.
+
+## What’s included
+
+Onboarding, Home (side menu, customize), Health Vault & Settings, Timeline (lenses, moments, Ask, tours), Learn (modules, video, tours), Community, Ask AI, Appointment Prep, and Add (upload / daily log / connect).
+
+Design tokens and Figma icons live under `src/index.css` and `src/assets/figma/`. Screen map: `SCREENS.md`. Build rules: `CONVENTIONS.md`.

@@ -1,12 +1,17 @@
 import type { RouteObject } from 'react-router-dom'
-import Placeholder from '../../components/Placeholder'
+import VaultHub from './VaultHub'
+import BiometricsDay from './BiometricsDay'
+import VaultLabs from './VaultLabs'
+import VaultMedications from './VaultMedications'
+import VaultVitals from './VaultVitals'
+import Settings from './Settings'
 
 export const vaultRoutes: RouteObject[] = [
-  { path: '/vault', element: <Placeholder title="Health Vault Hub" /> },
-  { path: '/vault/today', element: <Placeholder title="Vault Today" /> },
-  { path: '/vault/jul-13', element: <Placeholder title="Vault Jul 13" /> },
-  { path: '/vault/labs', element: <Placeholder title="Lab results" /> },
-  { path: '/vault/medications', element: <Placeholder title="Medications" /> },
-  { path: '/vault/vitals', element: <Placeholder title="Vitals" /> },
-  { path: '/settings', element: <Placeholder title="Settings" /> },
+  { path: '/vault', element: <VaultHub /> },
+  { path: '/vault/today', element: <BiometricsDay day="today" /> },
+  { path: '/vault/jul-13', element: <BiometricsDay day="jul13" /> },
+  { path: '/vault/labs', element: <VaultLabs /> },
+  { path: '/vault/medications', element: <VaultMedications /> },
+  { path: '/vault/vitals', element: <VaultVitals /> },
+  { path: '/settings', element: <Settings /> },
 ]

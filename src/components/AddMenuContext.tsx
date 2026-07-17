@@ -4,15 +4,22 @@ type AddMenuState = {
   isOpen: boolean
   open: () => void
   close: () => void
+  toggle: () => void
 }
 
-const AddMenuCtx = createContext<AddMenuState>({ isOpen: false, open: () => {}, close: () => {} })
+const AddMenuCtx = createContext<AddMenuState>({
+  isOpen: false,
+  open: () => {},
+  close: () => {},
+  toggle: () => {},
+})
 
 export function AddMenuProvider({ children }: { children: ReactNode }) {
   const [isOpen, setIsOpen] = useState(false)
   const open = useCallback(() => setIsOpen(true), [])
   const close = useCallback(() => setIsOpen(false), [])
-  const value = useMemo(() => ({ isOpen, open, close }), [isOpen, open, close])
+  const toggle = useCallback(() => setIsOpen((v) => !v), [])
+  const value = useMemo(() => ({ isOpen, open, close, toggle }), [isOpen, open, close, toggle])
   return <AddMenuCtx.Provider value={value}>{children}</AddMenuCtx.Provider>
 }
 

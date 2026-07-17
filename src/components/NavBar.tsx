@@ -7,10 +7,10 @@ import groupsActive from '../assets/figma/navbar_groups_active.svg'
 import groupsInactive from '../assets/figma/navbar_groups_inactive.svg'
 import dateRangeActive from '../assets/figma/navbar_date_range_active.svg'
 import dateRangeInactive from '../assets/figma/navbar_date_range_inactive.svg'
-import menuBookOuter from '../assets/figma/navbar_menu_book_inactive.svg'
-import menuBookInnerActive from '../assets/figma/navbar_menu_book_inner_active.svg'
-import menuBookInnerInactive from '../assets/figma/navbar_menu_book_inner_inactive.svg'
+import menuBookActive from '../assets/figma/navbar_menu_book_active.svg'
+import menuBookMuted from '../assets/figma/navbar_menu_book_muted.svg'
 import addIcon from '../assets/figma/navbar_add.svg'
+import closeWhite from '../assets/figma/close-white.svg'
 
 export type NavTab = 'home' | 'community' | 'timeline' | 'learn'
 
@@ -47,24 +47,42 @@ function TabButton({
 }
 
 /** Bottom navigation: dark pill with 4 tabs and the raised blue "+" button. */
-export default function NavBar({ tab }: { tab: NavTab }) {
+export default function NavBar({
+  tab,
+  locked = false,
+}: {
+  tab: NavTab
+  /** When true, tabs and + do nothing (used during onboarding tours). */
+  locked?: boolean
+}) {
   const navigate = useNavigate()
-  const { open } = useAddMenu()
+  const { isOpen, toggle, close } = useAddMenu()
+
+  const goTab = (path: string) => {
+    if (locked) return
+    close()
+    // Replace so tab switches don't stack and trap Back in a loop.
+    navigate(path, { replace: true })
+  }
 
   return (
-    <div className="pointer-events-none absolute inset-x-0 bottom-0 z-30 flex flex-col items-center gap-2">
-      <div className="pointer-events-auto mx-3 flex h-16 w-[366px] max-w-[calc(100%-24px)] items-center justify-between rounded-nav bg-ink px-5 drop-shadow-[0px_8px_11px_rgba(0,0,0,0.22)]">
+    <div className="pointer-events-none absolute inset-x-0 bottom-0 z-50 flex flex-col items-center gap-2">
+      <div
+        className={`mx-3 flex h-16 w-[366px] max-w-[calc(100%-24px)] items-center justify-between rounded-nav bg-ink px-5 drop-shadow-[0px_8px_11px_rgba(0,0,0,0.22)] ${
+          locked ? 'pointer-events-none' : 'pointer-events-auto'
+        }`}
+      >
         <div className="flex h-full w-[116px] items-center justify-between">
           <TabButton
             label="Home"
             active={tab === 'home'}
-            onClick={() => navigate('/home')}
+            onClick={() => goTab('/home')}
             icon={<img src={tab === 'home' ? homeActive : homeInactive} alt="" className="size-6" />}
           />
           <TabButton
             label="Community"
             active={tab === 'community'}
-            onClick={() => navigate('/community')}
+            onClick={() => goTab('/community')}
             icon={
               <img
                 src={tab === 'community' ? groupsActive : groupsInactive}
@@ -77,18 +95,23 @@ export default function NavBar({ tab }: { tab: NavTab }) {
         <div className="relative h-16 w-[68px]">
           <button
             type="button"
-            onClick={open}
-            aria-label="Add"
-            className="absolute -top-[30px] left-0 flex size-[67px] cursor-pointer items-center justify-center rounded-full border-[5px] border-canvas bg-accent drop-shadow-[0px_6px_7px_rgba(0,43,143,0.35)]"
+            onClick={locked ? undefined : toggle}
+            aria-label={isOpen ? 'Close' : 'Add'}
+            disabled={locked}
+            className="absolute -top-[30px] left-0 flex size-[67px] items-center justify-center rounded-full border-[5px] border-canvas bg-accent drop-shadow-[0px_6px_7px_rgba(0,43,143,0.35)] transition-transform duration-300 disabled:cursor-default"
           >
-            <img src={addIcon} alt="" className="size-7" />
+            <img
+              src={isOpen ? closeWhite : addIcon}
+              alt=""
+              className={`size-7 transition-transform duration-300 ${isOpen ? 'rotate-90' : 'rotate-0'}`}
+            />
           </button>
         </div>
         <div className="flex h-full w-[116px] items-center justify-between">
           <TabButton
             label="Timeline"
             active={tab === 'timeline'}
-            onClick={() => navigate('/timeline')}
+            onClick={() => goTab('/timeline')}
             icon={
               <img
                 src={tab === 'timeline' ? dateRangeActive : dateRangeInactive}
@@ -100,16 +123,13 @@ export default function NavBar({ tab }: { tab: NavTab }) {
           <TabButton
             label="Learn"
             active={tab === 'learn'}
-            onClick={() => navigate('/learn')}
+            onClick={() => goTab('/learn')}
             icon={
-              <span className="relative block size-6 overflow-clip">
-                <img src={menuBookOuter} alt="" className="absolute inset-0 size-full" />
-                <img
-                  src={tab === 'learn' ? menuBookInnerActive : menuBookInnerInactive}
-                  alt=""
-                  className="absolute inset-[18.75%_4.21%_11.9%_4.17%] h-auto w-[91.62%]"
-                />
-              </span>
+              <img
+                src={tab === 'learn' ? menuBookActive : menuBookMuted}
+                alt=""
+                className="size-6 object-contain"
+              />
             }
           />
         </div>

@@ -41,11 +41,39 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Hide scrollbars inside the phone frame — screens scroll like a native app */
+/* Hide scrollbars inside the phone frame — screens scroll like a native app.
+   min-height:0 + overflow-y:auto are required so flex children actually scroll
+   when content is taller than the phone frame. */
 .app-scroll {
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 .app-scroll::-webkit-scrollbar {
   display: none;
+}
+
+/* Horizontal chip / card rows — never scroll vertically; clip nothing tall */
+.app-scroll-x {
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  overflow-x: auto;
+  overflow-y: hidden;
+  flex-shrink: 0;
+}
+.app-scroll-x::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes tabSlide {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }

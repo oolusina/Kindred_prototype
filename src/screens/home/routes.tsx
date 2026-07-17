@@ -1,7 +1,8 @@
 import type { RouteObject } from 'react-router-dom'
-import Placeholder from '../../components/Placeholder'
+import HomeScreen from './HomeScreen'
+import HomeCustomize from './HomeCustomize'
 
 export const homeRoutes: RouteObject[] = [
-  { path: '/home', element: <Placeholder title="Home" /> },
-  { path: '/home/customize', element: <Placeholder title="Home Customize" /> },
+  { path: '/home', element: <HomeScreen /> },
+  { path: '/home/customize', element: <HomeCustomize /> },
 ]

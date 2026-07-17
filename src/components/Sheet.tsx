@@ -21,28 +21,36 @@ export default function Sheet({
   useEffect(() => {
     if (open) {
       setMounted(true)
-      const t = requestAnimationFrame(() => setVisible(true))
-      return () => cancelAnimationFrame(t)
+      // Double rAF so the browser paints the off-screen state before transitioning in.
+      let raf2 = 0
+      const raf1 = requestAnimationFrame(() => {
+        raf2 = requestAnimationFrame(() => setVisible(true))
+      })
+      return () => {
+        cancelAnimationFrame(raf1)
+        cancelAnimationFrame(raf2)
+      }
     }
     setVisible(false)
-    const t = setTimeout(() => setMounted(false), 250)
+    const t = setTimeout(() => setMounted(false), 300)
     return () => clearTimeout(t)
   }, [open])
 
   if (!mounted) return null
 
   return (
-    <div className="absolute inset-0 z-40 flex flex-col justify-end">
+    // Above NavBar (z-50) so sheets like Sources cover the bottom nav
+    <div className="absolute inset-0 z-[60] flex flex-col justify-end">
       <button
         type="button"
         aria-label="Close"
         onClick={onClose}
-        className={`absolute inset-0 bg-[rgba(20,20,25,0.45)] transition-opacity duration-250 ${
+        className={`absolute inset-0 bg-[rgba(20,20,25,0.45)] transition-opacity duration-300 ease-out ${
           visible ? 'opacity-100' : 'opacity-0'
         }`}
       />
       <div
-        className={`relative max-h-[85%] overflow-hidden rounded-t-[24px] bg-card transition-transform duration-250 ease-out ${
+        className={`relative max-h-[85%] overflow-hidden rounded-t-[24px] bg-card transition-transform duration-300 ease-out ${
           visible ? 'translate-y-0' : 'translate-y-full'
         } ${className}`}
       >
