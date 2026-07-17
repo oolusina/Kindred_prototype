@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import SystemBar from '../../components/SystemBar'
-import NavBar from '../../components/NavBar'
+import HomeIndicator from '../../components/HomeIndicator'
 import Sheet from '../../components/Sheet'
 import SegmentedTabs from '../../components/SegmentedTabs'
 import arrowBack from '../../assets/figma/learn-arrow-back.svg'
@@ -97,7 +97,7 @@ export default function LearnModule() {
         <p className="ml-2 font-sans text-[13px] text-accent">Kidney disease</p>
         <p className="font-sans text-[13px] text-ink-500">· Module 2 of 5</p>
       </div>
-      <div className="app-scroll flex-1 overflow-y-auto px-5 pt-4 pb-28">
+      <div className="app-scroll flex-1 overflow-y-auto px-5 pt-4 pb-8">
         <div
           ref={depthRef}
           className={`mb-3.5 ${tourStep === 2 ? 'relative z-[60]' : ''}`}
@@ -212,7 +212,7 @@ export default function LearnModule() {
           </button>
         </div>
       </div>
-      <NavBar tab="learn" />
+      <HomeIndicator />
       <Sheet open={sourcesOpen} onClose={() => setSourcesOpen(false)}>
         <div className="px-5 pb-8">
           <div className="mb-1 flex items-start pt-1">

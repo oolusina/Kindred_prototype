@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import SystemBar from '../../components/SystemBar'
-import NavBar from '../../components/NavBar'
+import HomeIndicator from '../../components/HomeIndicator'
 import arrowBack from '../../assets/figma/learn-arrow-back.svg'
 import playCircle from '../../assets/figma/learn-play-circle-blue.svg'
 import playDark from '../../assets/figma/learn-play-circle-dark.svg'
@@ -78,7 +78,7 @@ export default function ExplainerVideo() {
         <p className="font-sans text-[15px] font-medium text-ink">Visual Guide</p>
       </div>
 
-      <div className="app-scroll flex-1 overflow-y-auto px-5 pt-4 pb-36">
+      <div className="app-scroll flex-1 overflow-y-auto px-5 pt-4 pb-8">
         <button
           type="button"
           onClick={() => {
@@ -194,7 +194,7 @@ export default function ExplainerVideo() {
         </div>
       </div>
 
-      <NavBar tab="learn" />
+      <HomeIndicator />
 
       {tourStep === 3 && (
         <div className="pointer-events-none absolute inset-0 z-50">

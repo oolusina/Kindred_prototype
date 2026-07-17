@@ -1,5 +1,5 @@
-import { useCallback } from 'react'
-import { useNavigate, type NavigateOptions, type To } from 'react-router-dom'
+import { useCallback, useEffect } from 'react'
+import { useLocation, useNavigate, type NavigateOptions, type To } from 'react-router-dom'
 
 /** True when React Router has an earlier entry in this tab's history stack. */
 export function canGoBack(): boolean {
@@ -34,4 +34,40 @@ export function useReplaceNavigate() {
     },
     [navigate],
   )
+}
+
+const PREP_SHELL_RETURN_KEY = 'kindred.prepShellReturn'
+
+/** Before-visit / During-visit tabs — one logical prep screen. */
+export function isPrepShellPath(path: string) {
+  return path === '/prep' || path === '/prep/during'
+}
+
+let lastPathname = '/'
+
+/**
+ * Mount once near the router. Remembers the last non-prep route so Back on
+ * /prep and /prep/during exits the whole prep shell to the same place.
+ */
+export function PrepShellHistoryTracker() {
+  const location = useLocation()
+
+  useEffect(() => {
+    const path = location.pathname
+    if (isPrepShellPath(path) && !lastPathname.startsWith('/prep')) {
+      sessionStorage.setItem(PREP_SHELL_RETURN_KEY, lastPathname || '/home')
+    }
+    lastPathname = path
+  }, [location.pathname])
+
+  return null
+}
+
+/** Back from /prep or /prep/during → the page that opened prep (not the other tab). */
+export function usePrepShellBack(fallback = '/home') {
+  const navigate = useNavigate()
+  return useCallback(() => {
+    const returnTo = sessionStorage.getItem(PREP_SHELL_RETURN_KEY) || fallback
+    navigate(returnTo)
+  }, [navigate, fallback])
 }

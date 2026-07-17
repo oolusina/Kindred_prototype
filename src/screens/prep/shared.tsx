@@ -1,9 +1,15 @@
 import type { Ref } from 'react'
+import { useLocation } from 'react-router-dom'
 import SystemBar from '../../components/SystemBar'
 import HomeIndicator from '../../components/HomeIndicator'
 import SegmentedTabs from '../../components/SegmentedTabs'
 import arrowBack from '../../assets/figma/arrow-back.svg'
-import { useReplaceNavigate, useSmartBack } from '../../navigation/history'
+import {
+  isPrepShellPath,
+  usePrepShellBack,
+  useReplaceNavigate,
+  useSmartBack,
+} from '../../navigation/history'
 
 export function PrepHeader({
   phase,
@@ -19,7 +25,10 @@ export function PrepHeader({
   elevateTabs?: boolean
   lockPhase?: boolean
 }) {
-  const goBack = useSmartBack(fallback)
+  const location = useLocation()
+  const smartBack = useSmartBack(fallback)
+  const shellBack = usePrepShellBack(fallback)
+  const goBack = isPrepShellPath(location.pathname) ? shellBack : smartBack
   const replaceNavigate = useReplaceNavigate()
   return (
     <>

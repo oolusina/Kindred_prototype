@@ -5,6 +5,7 @@ import chevronRight from '../../assets/figma/chevron-right-gray.svg'
 import editBlue from '../../assets/figma/edit-blue-prep.svg'
 import groupsBlue from '../../assets/figma/groups-blue-prep.svg'
 import pictureAsPdf from '../../assets/figma/picture-as-pdf.svg'
+import { usePrototypeState } from '../../state/PrototypeState'
 import { markTourSeen, tourSeen, TOUR_PREP } from '../timeline/tour'
 import {
   PrepTourCoach,
@@ -21,6 +22,7 @@ export default function PrepBefore() {
   const navigate = useNavigate()
   const location = useLocation()
   const resumeStep = (location.state as { tourStep?: PrepTourStep } | null)?.tourStep
+  const { prepQuestions } = usePrototypeState()
   const rootRef = useRef<HTMLDivElement>(null)
   const questionsRef = useRef<HTMLDivElement>(null)
   const sendRef = useRef<HTMLDivElement>(null)
@@ -64,33 +66,33 @@ export default function PrepBefore() {
             </button>
           </div>
           <div className="flex flex-col rounded-2xl bg-card px-4 py-1">
-            <div className="flex flex-col gap-1.5 py-3.5">
-              <p className="font-sans text-[13.5px] font-medium leading-[19px] text-ink">
-                Should my blood-pressure medication change?
-              </p>
-              <Tag kind="care" />
-            </div>
-            <div className="h-px w-full bg-[rgba(0,43,143,0.06)]" />
-            <div className="flex flex-col gap-1.5 py-3.5">
-              <p className="font-sans text-[13.5px] font-medium leading-[19px] text-ink">
-                Is an SGLT2 inhibitor right for me?
-              </p>
-              <Tag kind="ai" />
-            </div>
-            <div className="h-px w-full bg-[rgba(0,43,143,0.06)]" />
-            <button
-              type="button"
-              onClick={() => !touring && navigate('/community/response')}
-              className="flex w-full cursor-pointer items-center justify-between py-3.5 text-left"
-            >
-              <div className="flex min-w-0 flex-1 flex-col gap-1.5">
-                <p className="font-sans text-[13.5px] font-medium leading-[19px] text-ink">
-                  Did changing breakfast carbs lower your morning readings?
-                </p>
-                <Tag kind="community" />
+            {prepQuestions.map((q, i) => (
+              <div key={q.id}>
+                {i > 0 && <div className="h-px w-full bg-[rgba(0,43,143,0.06)]" />}
+                {q.kind === 'community' ? (
+                  <button
+                    type="button"
+                    onClick={() => !touring && navigate('/community/response')}
+                    className="flex w-full cursor-pointer items-center justify-between py-3.5 text-left"
+                  >
+                    <div className="flex min-w-0 flex-1 flex-col gap-1.5">
+                      <p className="font-sans text-[13.5px] font-medium leading-[19px] text-ink">
+                        {q.text}
+                      </p>
+                      <Tag kind={q.kind} />
+                    </div>
+                    <img src={chevronRight} alt="" className="size-5 shrink-0" />
+                  </button>
+                ) : (
+                  <div className="flex flex-col gap-1.5 py-3.5">
+                    <p className="font-sans text-[13.5px] font-medium leading-[19px] text-ink">
+                      {q.text}
+                    </p>
+                    <Tag kind={q.kind} />
+                  </div>
+                )}
               </div>
-              <img src={chevronRight} alt="" className="size-5 shrink-0" />
-            </button>
+            ))}
           </div>
         </div>
 
@@ -135,7 +137,7 @@ export default function PrepBefore() {
       </div>
       <PrepFooter
         label="Save prep"
-        onClick={() => !touring && navigate('/prep/during')}
+        onClick={() => !touring && navigate('/prep/during', { replace: true })}
       />
 
       {tourStep >= 0 && (

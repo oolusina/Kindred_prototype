@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import SystemBar from '../../components/SystemBar'
-import NavBar from '../../components/NavBar'
+import HomeIndicator from '../../components/HomeIndicator'
 import Sheet from '../../components/Sheet'
 import SegmentedTabs from '../../components/SegmentedTabs'
 import arrowBack from '../../assets/figma/learn-arrow-back.svg'
@@ -96,8 +96,7 @@ export default function LearnStep({ step }: { step: 1 | 2 | 3 }) {
   const [bookmarked, setBookmarked] = useState(false)
   const [openFaq, setOpenFaq] = useState(0)
 
-  const backTo =
-    step === 1 ? '/learn/module' : step === 2 ? '/learn/module/step-1' : '/learn/module/step-2'
+  const backTo = '/learn'
   const nextTo =
     step === 1
       ? '/learn/module/step-2'
@@ -125,7 +124,7 @@ export default function LearnStep({ step }: { step: 1 | 2 | 3 }) {
         </div>
       </div>
 
-      <div className="app-scroll flex-1 overflow-y-auto px-5 pt-4 pb-40">
+      <div className="app-scroll flex-1 overflow-y-auto px-5 pt-4 pb-28">
         <div className="mb-3.5">
           <SegmentedTabs
             size="sm"
@@ -324,7 +323,7 @@ export default function LearnStep({ step }: { step: 1 | 2 | 3 }) {
         )}
       </div>
 
-      <div className="pointer-events-none absolute inset-x-0 bottom-[118px] z-10 px-5">
+      <div className="pointer-events-none absolute inset-x-0 bottom-8 z-10 px-5">
         <div className="pointer-events-auto flex items-center gap-3">
           <button
             type="button"
@@ -350,7 +349,7 @@ export default function LearnStep({ step }: { step: 1 | 2 | 3 }) {
         </div>
       </div>
 
-      <NavBar tab="learn" />
+      <HomeIndicator />
 
       <Sheet open={sourcesOpen} onClose={() => setSourcesOpen(false)}>
         <div className="px-5 pb-8">

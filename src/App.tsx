@@ -2,6 +2,7 @@ import { Navigate, useRoutes, type RouteObject } from 'react-router-dom'
 import PhoneFrame from './components/PhoneFrame'
 import { AddMenuProvider } from './components/AddMenuContext'
 import { PrototypeStateProvider } from './state/PrototypeState'
+import { PrepShellHistoryTracker } from './navigation/history'
 import AddMenuOverlay from './screens/add/AddMenuOverlay'
 import { onboardingRoutes } from './screens/onboarding/routes'
 import { homeRoutes } from './screens/home/routes'
@@ -33,6 +34,7 @@ export default function App() {
     <PrototypeStateProvider>
       <AddMenuProvider>
         <PhoneFrame>
+          <PrepShellHistoryTracker />
           <div className="relative flex min-h-0 flex-1 flex-col overflow-hidden">
             {element}
           </div>

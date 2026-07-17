@@ -18,6 +18,14 @@ export type SyncKey =
   | 'notes'
   | 'immunizations'
 
+export type PrepQuestionKind = 'care' | 'ai' | 'community' | 'learning'
+
+export type PrepQuestion = {
+  id: string
+  text: string
+  kind: PrepQuestionKind
+}
+
 export type SavedSource = {
   id: string
   letter: string
@@ -32,6 +40,8 @@ type PrototypeState = {
   settings: Record<string, boolean>
   sharing: Record<string, boolean>
   savedSources: SavedSource[]
+  prepQuestions: PrepQuestion[]
+  prepRecommended: PrepQuestion[]
   setSync: (key: SyncKey, value: boolean) => void
   setSyncs: (next: Record<SyncKey, boolean>) => void
   setHomeWidget: (key: string, value: boolean) => void
@@ -39,7 +49,22 @@ type PrototypeState = {
   setSharingItem: (key: string, value: boolean) => void
   toggleSavedSource: (source: SavedSource) => void
   isSourceSaved: (id: string) => boolean
+  setPrepQuestions: (next: PrepQuestion[] | ((prev: PrepQuestion[]) => PrepQuestion[])) => void
+  setPrepRecommended: (
+    next: PrepQuestion[] | ((prev: PrepQuestion[]) => PrepQuestion[]),
+  ) => void
 }
+
+const DEFAULT_PREP_QUESTIONS: PrepQuestion[] = [
+  { id: '1', text: 'Should my blood-pressure medication change?', kind: 'care' },
+  { id: '2', text: 'Is an SGLT2 inhibitor right for me?', kind: 'ai' },
+  { id: '3', text: 'What renal diet support is available?', kind: 'community' },
+]
+
+const DEFAULT_PREP_RECOMMENDED: PrepQuestion[] = [
+  { id: 'r1', text: 'What does my eGFR trend mean?', kind: 'learning' },
+  { id: 'r2', text: 'Ask about a renal diet referral?', kind: 'community' },
+]
 
 const DEFAULTS: Omit<
   PrototypeState,
@@ -50,6 +75,8 @@ const DEFAULTS: Omit<
   | 'setSharingItem'
   | 'toggleSavedSource'
   | 'isSourceSaved'
+  | 'setPrepQuestions'
+  | 'setPrepRecommended'
 > = {
   syncs: {
     diagnoses: true,
@@ -89,6 +116,8 @@ const DEFAULTS: Omit<
       sub: 'mayoclinic.org · Chronic kidney disease',
     },
   ],
+  prepQuestions: DEFAULT_PREP_QUESTIONS,
+  prepRecommended: DEFAULT_PREP_RECOMMENDED,
 }
 
 function load(): typeof DEFAULTS {
@@ -102,6 +131,8 @@ function load(): typeof DEFAULTS {
       settings: { ...DEFAULTS.settings, ...parsed.settings },
       sharing: { ...DEFAULTS.sharing, ...parsed.sharing },
       savedSources: parsed.savedSources ?? DEFAULTS.savedSources,
+      prepQuestions: parsed.prepQuestions ?? DEFAULTS.prepQuestions,
+      prepRecommended: parsed.prepRecommended ?? DEFAULTS.prepRecommended,
     }
   } catch {
     return DEFAULTS
@@ -154,6 +185,26 @@ export function PrototypeStateProvider({ children }: { children: ReactNode }) {
     [state.savedSources],
   )
 
+  const setPrepQuestions = useCallback(
+    (next: PrepQuestion[] | ((prev: PrepQuestion[]) => PrepQuestion[])) => {
+      setState((s) => ({
+        ...s,
+        prepQuestions: typeof next === 'function' ? next(s.prepQuestions) : next,
+      }))
+    },
+    [],
+  )
+
+  const setPrepRecommended = useCallback(
+    (next: PrepQuestion[] | ((prev: PrepQuestion[]) => PrepQuestion[])) => {
+      setState((s) => ({
+        ...s,
+        prepRecommended: typeof next === 'function' ? next(s.prepRecommended) : next,
+      }))
+    },
+    [],
+  )
+
   const value = useMemo(
     () => ({
       ...state,
@@ -164,6 +215,8 @@ export function PrototypeStateProvider({ children }: { children: ReactNode }) {
       setSharingItem,
       toggleSavedSource,
       isSourceSaved,
+      setPrepQuestions,
+      setPrepRecommended,
     }),
     [
       state,
@@ -174,6 +227,8 @@ export function PrototypeStateProvider({ children }: { children: ReactNode }) {
       setSharingItem,
       toggleSavedSource,
       isSourceSaved,
+      setPrepQuestions,
+      setPrepRecommended,
     ],
   )
 

@@ -4,6 +4,7 @@ import { PrepHeader, PrepFooter, Tag } from './shared'
 import micNone from '../../assets/figma/mic-none.svg'
 import toggleOff from '../../assets/figma/toggle-off.svg'
 import toggleOn from '../../assets/figma/toggle-on.svg'
+import { usePrototypeState } from '../../state/PrototypeState'
 import { markTourSeen, tourSeen, TOUR_PREP } from '../timeline/tour'
 import {
   PrepTourCoach,
@@ -22,21 +23,16 @@ const SNAPSHOT = [
   'New since last visit: urgent care · Jun 28',
 ]
 
-const QUESTIONS: { text: string; kind: 'care' | 'ai' | 'community' }[] = [
-  { text: 'Should my blood-pressure medication change?', kind: 'care' },
-  { text: 'Is an SGLT2 inhibitor right for me?', kind: 'ai' },
-  { text: 'What renal diet support is available?', kind: 'community' },
-]
-
 /** Figma 2929:7333 — steps 4–5 on During visit. */
 export default function PrepDuring() {
   const navigate = useNavigate()
   const location = useLocation()
   const resumeStep = (location.state as { tourStep?: PrepTourStep } | null)?.tourStep
+  const { prepQuestions } = usePrototypeState()
   const rootRef = useRef<HTMLDivElement>(null)
   const tabsRef = useRef<HTMLDivElement>(null)
   const transcriptionRef = useRef<HTMLButtonElement>(null)
-  const [checked, setChecked] = useState<Record<number, boolean>>({})
+  const [checked, setChecked] = useState<Record<string, boolean>>({})
   const [transcribe, setTranscribe] = useState(false)
   const [tourStep, setTourStep] = useState<PrepTourStep | -1>(() => {
     if (tourSeen(TOUR_PREP)) return -1
@@ -60,9 +56,9 @@ export default function PrepDuring() {
     navigate('/prep', { replace: true })
   }
 
-  const toggleQ = (i: number) => {
+  const toggleQ = (id: string) => {
     if (touring) return
-    setChecked((c) => ({ ...c, [i]: !c[i] }))
+    setChecked((c) => ({ ...c, [id]: !c[id] }))
   }
 
   return (
@@ -107,20 +103,20 @@ export default function PrepDuring() {
           </button>
         </div>
         <div className="flex flex-col rounded-2xl bg-card px-4 py-1">
-          {QUESTIONS.map((q, i) => (
-            <div key={q.text}>
+          {prepQuestions.map((q, i) => (
+            <div key={q.id}>
               {i > 0 && <div className="h-px w-full bg-[rgba(0,43,143,0.06)]" />}
               <div className="flex items-start gap-3 py-2.5">
                 <button
                   type="button"
-                  onClick={() => toggleQ(i)}
+                  onClick={() => toggleQ(q.id)}
                   className={`mt-0.5 flex size-[22px] shrink-0 cursor-pointer items-center justify-center rounded-[7px] border-[1.5px] ${
-                    checked[i]
+                    checked[q.id]
                       ? 'border-accent bg-accent'
                       : 'border-[rgba(0,43,143,0.4)] bg-transparent'
                   }`}
                 >
-                  {checked[i] && <span className="text-[12px] text-white">✓</span>}
+                  {checked[q.id] && <span className="text-[12px] text-white">✓</span>}
                 </button>
                 <div className="flex min-w-0 flex-1 flex-col gap-1.5">
                   <p className="font-sans text-[13px] font-medium leading-[18px] text-ink">
