@@ -7,16 +7,36 @@ import groupsWhite from '../../assets/figma/groups-white.svg'
 import expandMore from '../../assets/figma/expand-more.svg'
 import addInk from '../../assets/figma/add-ink.svg'
 
-const TAGS = ['Diet', 'Medication', 'Symptoms']
+const PRESET_TAGS = ['Diet', 'Medication', 'Symptoms']
 
 export default function CommunityNew() {
   const navigate = useNavigate()
   const [question, setQuestion] = useState('')
   const [tags, setTags] = useState(['Diet'])
+  const [customTags, setCustomTags] = useState<string[]>([])
+  const [addingTag, setAddingTag] = useState(false)
+  const [draftTag, setDraftTag] = useState('')
   const [community, setCommunity] = useState('Type 2 Diabetes')
+
+  const allTags = [...PRESET_TAGS, ...customTags]
 
   const toggleTag = (t: string) =>
     setTags((prev) => (prev.includes(t) ? prev.filter((x) => x !== t) : [...prev, t]))
+
+  const commitTag = () => {
+    const next = draftTag.trim()
+    if (!next) {
+      setAddingTag(false)
+      setDraftTag('')
+      return
+    }
+    if (!allTags.some((t) => t.toLowerCase() === next.toLowerCase())) {
+      setCustomTags((prev) => [...prev, next])
+    }
+    setTags((prev) => (prev.includes(next) ? prev : [...prev, next]))
+    setDraftTag('')
+    setAddingTag(false)
+  }
 
   return (
     <div className="relative flex h-full w-full flex-col bg-canvas">
@@ -68,7 +88,7 @@ export default function CommunityNew() {
           Add tags
         </p>
         <div className="flex flex-wrap items-center gap-2">
-          {TAGS.map((t) => (
+          {allTags.map((t) => (
             <button
               key={t}
               type="button"
@@ -82,12 +102,35 @@ export default function CommunityNew() {
               {t}
             </button>
           ))}
-          <button
-            type="button"
-            className="flex size-8 cursor-pointer items-center justify-center rounded-full border border-accent-200"
-          >
-            <img src={addInk} alt="" className="size-4" />
-          </button>
+          {addingTag ? (
+            <input
+              autoFocus
+              value={draftTag}
+              onChange={(e) => setDraftTag(e.target.value)}
+              onBlur={commitTag}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault()
+                  commitTag()
+                }
+                if (e.key === 'Escape') {
+                  setDraftTag('')
+                  setAddingTag(false)
+                }
+              }}
+              placeholder="Tag name"
+              className="h-8 min-w-[96px] rounded-full border border-accent bg-white px-3 font-sans text-[12px] text-ink outline-none"
+            />
+          ) : (
+            <button
+              type="button"
+              aria-label="Add tag"
+              onClick={() => setAddingTag(true)}
+              className="flex size-8 cursor-pointer items-center justify-center rounded-full border border-accent-200"
+            >
+              <img src={addInk} alt="" className="size-4" />
+            </button>
+          )}
         </div>
         <p className="px-3 py-2.5 text-center font-sans text-[13px] leading-[1.36] text-ink-500">
           Members-only. Answers are checked against community data.

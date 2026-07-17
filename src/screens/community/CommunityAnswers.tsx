@@ -22,12 +22,14 @@ import {
   useSpotlightBox,
   type CommunityTourStep,
 } from './CommunityTour'
+import MatchExplainModal from './MatchExplainModal'
 
 const RESPONSES = [
   {
     initials: 'QH',
     name: 'QuietHeron',
     match: '92% match',
+    matchPct: 92,
     text: 'I cut carbs to about 20g and my morning numbers dropped within three weeks.',
     verify: "Verified by 254 members' vault data",
     helpful: '24 found helpful',
@@ -37,6 +39,7 @@ const RESPONSES = [
     initials: 'SW',
     name: 'SwiftWren',
     match: '78% match',
+    matchPct: 78,
     text: "Cinnamon every morning seemed to help my highs, but it's hard to say.",
     verify: 'Not enough community vault data to verify',
     helpful: '8 found helpful',
@@ -44,16 +47,17 @@ const RESPONSES = [
   },
 ]
 
-/** Figma 2910:7360 — steps 4–5 on Answers. */
+/** Figma 2910:7360 — steps 4–5 on Answers. Match sheet: 2870:6736. */
 export default function CommunityAnswers() {
   const navigate = useNavigate()
   const location = useLocation()
   const resumeStep = (location.state as { tourStep?: CommunityTourStep } | null)?.tourStep
   const rootRef = useRef<HTMLDivElement>(null)
-  const matchRef = useRef<HTMLSpanElement>(null)
+  const matchRef = useRef<HTMLButtonElement>(null)
   const verifyRef = useRef<HTMLDivElement>(null)
   const [sortOpen, setSortOpen] = useState(false)
   const [sortBy, setSortBy] = useState('Most similar to you')
+  const [matchOpen, setMatchOpen] = useState<{ name: string; pct: number } | null>(null)
   const [tourStep, setTourStep] = useState<CommunityTourStep | -1>(() => {
     if (tourSeen(TOUR_COMMUNITY)) return -1
     if (resumeStep === 4 || resumeStep === 5) return resumeStep
@@ -83,11 +87,7 @@ export default function CommunityAnswers() {
           <button
             type="button"
             aria-label="Back"
-            onClick={() =>
-              touring
-                ? dismissTour()
-                : navigate('/community/t2d')
-            }
+            onClick={() => (touring ? dismissTour() : navigate('/community/t2d'))}
             className="cursor-pointer self-start"
           >
             <img src={arrowBackWhite} alt="" className="size-[26px]" />
@@ -120,11 +120,9 @@ export default function CommunityAnswers() {
           </button>
         </div>
         {RESPONSES.map((r, i) => (
-          <button
+          <div
             key={r.name + r.text.slice(0, 12)}
-            type="button"
-            onClick={() => !touring && navigate('/community/response')}
-            className="flex w-full cursor-pointer flex-col gap-2.5 rounded-2xl border border-accent-100 bg-card px-4 py-3.5 text-left"
+            className="flex w-full flex-col gap-2.5 rounded-2xl border border-accent-100 bg-card px-4 py-3.5 text-left"
           >
             <div className="flex items-center gap-2.5">
               <div
@@ -134,15 +132,19 @@ export default function CommunityAnswers() {
               </div>
               <div className="flex min-w-0 flex-1 flex-col">
                 <p className="font-sans text-[15px] font-medium text-ink">{r.name}</p>
-                <span
+                <button
+                  type="button"
                   ref={i === 0 ? matchRef : undefined}
-                  className={`flex w-fit items-center gap-0.5 rounded-full bg-accent-50 py-0.5 pl-2 pr-1.5 ${
+                  onClick={() => {
+                    if (!touring) setMatchOpen({ name: r.name, pct: r.matchPct })
+                  }}
+                  className={`flex w-fit cursor-pointer items-center gap-0.5 rounded-full bg-accent-50 py-0.5 pl-2 pr-1.5 ${
                     tourStep === 4 && i === 0 ? 'relative z-[60]' : ''
                   }`}
                 >
                   <span className="font-sans text-[12px] text-accent">{r.match}</span>
                   <img src={chevronRight} alt="" className="size-[13px]" />
-                </span>
+                </button>
               </div>
             </div>
             <p className="font-sans text-[15px] leading-[1.42] text-ink">{r.text}</p>
@@ -160,14 +162,18 @@ export default function CommunityAnswers() {
                 <img src={thumbUp} alt="" className="size-[15px]" />
                 <span className="font-sans text-[13px] text-ink-500">{r.helpful}</span>
               </span>
-              <span className="flex items-center gap-0.5">
+              <button
+                type="button"
+                onClick={() => !touring && navigate('/community/response')}
+                className="flex cursor-pointer items-center gap-0.5"
+              >
                 <span className="font-sans text-[15px] font-semibold text-accent">
                   View discussion
                 </span>
                 <img src={chevronRight} alt="" className="size-4" />
-              </span>
+              </button>
             </div>
-          </button>
+          </div>
         ))}
         <button
           type="button"
@@ -213,6 +219,14 @@ export default function CommunityAnswers() {
         </div>
       </Sheet>
 
+      <MatchExplainModal
+        open={!!matchOpen}
+        name={matchOpen?.name}
+        matchPct={matchOpen?.pct}
+        onClose={() => setMatchOpen(null)}
+        onSeeAnswer={() => navigate('/community/response')}
+      />
+
       {tourStep >= 4 && (
         <div className="pointer-events-none absolute inset-0 z-50">
           <div className="pointer-events-auto absolute inset-0">
@@ -229,7 +243,9 @@ export default function CommunityAnswers() {
                   onSecondary={() =>
                     navigate('/community', { state: { tourStep: 3 }, replace: true })
                   }
-                  caret={<span className="absolute -top-[11px] left-[82px] h-0 w-0 border-x-[9px] border-b-[12px] border-x-transparent border-b-white" />}
+                  caret={
+                    <span className="absolute -top-[11px] left-[82px] h-0 w-0 border-x-[9px] border-b-[12px] border-x-transparent border-b-white" />
+                  }
                 />
               </div>
             </>

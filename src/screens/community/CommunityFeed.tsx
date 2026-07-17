@@ -12,7 +12,7 @@ import searchBlue from '../../assets/figma/search-blue.svg'
 import sort from '../../assets/figma/sort.svg'
 import expandMore from '../../assets/figma/expand-more.svg'
 import forum from '../../assets/figma/forum.svg'
-import forumWhite from '../../assets/figma/forum-white.svg'
+import addComment from '../../assets/figma/add-comment-white.svg'
 import chevronRight from '../../assets/figma/chevron-right-gray.svg'
 import tips from '../../assets/figma/tips-and-updates.svg'
 import autoAwesomeLight from '../../assets/figma/auto-awesome-light.svg'
@@ -67,7 +67,7 @@ const FEED: FeedItem[] = [
   {
     type: 'question',
     community: 'Kidney Disease',
-    age: '5d',
+    age: '1w',
     text: 'How fast did your eGFR change on an SGLT2?',
     answers: '14 answers',
     to: '/community/answers',
@@ -75,7 +75,7 @@ const FEED: FeedItem[] = [
   {
     type: 'question',
     community: 'Type 2 Diabetes',
-    age: '1w',
+    age: '4d',
     text: 'Is a CGM worth it for type 2?',
     answers: '12 answers',
     to: '/community/answers',
@@ -122,8 +122,8 @@ export default function CommunityFeed() {
       <div className="shrink-0 rounded-b-header bg-accent">
         <SystemBar variant="light" />
         <div className="flex flex-col gap-2.5 px-5 pb-6 pt-5">
-          <div className="flex items-start justify-between">
-            <div className="flex flex-col">
+          <div className="flex items-start justify-between gap-2">
+            <div className="flex min-w-0 flex-col">
               <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.66px] text-[#b8c7eb]">
                 Your communities
               </p>
@@ -131,7 +131,17 @@ export default function CommunityFeed() {
                 Community
               </p>
             </div>
-            <ProfileAvatarButton onClick={() => !touring && setMenuOpen(true)} />
+            <div className="flex shrink-0 items-center gap-1.5">
+              <button
+                type="button"
+                aria-label="Ask a question"
+                onClick={() => !touring && navigate('/community/new')}
+                className="flex size-[42px] cursor-pointer items-center justify-center rounded-[23px] bg-accent-subtle"
+              >
+                <img src={addComment} alt="" className="size-[22px]" />
+              </button>
+              <ProfileAvatarButton onClick={() => !touring && setMenuOpen(true)} />
+            </div>
           </div>
           <div className="h-px w-full bg-accent-subtle" />
           <button
@@ -144,7 +154,7 @@ export default function CommunityFeed() {
           >
             <img src={autoAwesome} alt="" className="size-[18px]" />
             <span className="flex-1 text-left font-sans text-[15px] text-ink-500">
-              Search all communities
+              Ask about your health
             </span>
             <span className="flex size-9 items-center justify-center rounded-[18px] bg-accent">
               <img src={mic} alt="" className="size-[18px]" />
@@ -153,7 +163,7 @@ export default function CommunityFeed() {
         </div>
       </div>
 
-      <div className="app-scroll flex-1 pb-36">
+      <div className="app-scroll flex-1 pb-28">
         <div className="flex flex-col gap-4 px-5 pt-4">
           <div
             ref={spacesRef}
@@ -164,18 +174,18 @@ export default function CommunityFeed() {
             <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.66px] text-ink-500">
               Your communities
             </p>
-            <div className="app-scroll-x -mx-5 flex h-[102px] items-stretch gap-2.5 px-5">
+            <div className="flex items-stretch gap-2.5">
               <button
                 type="button"
                 onClick={() => !touring && navigate('/community/t2d')}
-                className="flex h-full w-[170px] shrink-0 cursor-pointer flex-col items-start gap-2 rounded-2xl bg-accent p-3.5 text-left"
+                className="flex min-w-0 flex-1 cursor-pointer flex-col items-start gap-2 rounded-2xl bg-accent p-3.5 text-left"
               >
                 <p className="font-sans text-[15px] font-medium leading-[1.4] text-white">
                   Type 2 Diabetes
                 </p>
                 <div className="flex items-center gap-1">
                   <img src={groupsWhite} alt="" className="size-3" />
-                  <p className="font-sans text-[12px] text-[#b8c7eb]">12,480 members</p>
+                  <p className="font-sans text-[13px] text-[#b8c7eb]">12,480 members</p>
                 </div>
                 <span className="rounded-full bg-white px-2 py-0.5 font-sans text-[12px] text-accent">
                   3 new posts
@@ -184,30 +194,30 @@ export default function CommunityFeed() {
               <button
                 type="button"
                 onClick={() => !touring && navigate('/community/t2d')}
-                className="flex h-full w-[170px] shrink-0 cursor-pointer flex-col items-start gap-2 rounded-2xl bg-accent-100 p-3.5 text-left"
+                className="flex min-w-0 flex-1 cursor-pointer flex-col items-start gap-2 rounded-2xl bg-accent-100 p-3.5 text-left"
               >
                 <p className="font-sans text-[15px] font-medium leading-[1.4] text-ink">
                   Kidney Disease
                 </p>
                 <div className="flex items-center gap-1">
                   <img src={groupsBlue} alt="" className="size-3" />
-                  <p className="font-sans text-[12px] text-ink-500">9,400 members</p>
+                  <p className="font-sans text-[13px] text-ink-500">9,400 members</p>
                 </div>
                 <span className="rounded-full bg-accent px-2 py-0.5 font-sans text-[12px] text-white">
                   1 new posts
                 </span>
               </button>
-              <button
-                type="button"
-                onClick={() => !touring && navigate('/community/browse')}
-                className="flex h-full w-[170px] shrink-0 cursor-pointer flex-col items-start justify-center gap-1.5 rounded-2xl border border-dashed border-accent-200 bg-card p-3.5 text-left"
-              >
-                <img src={searchBlue} alt="" className="size-4" />
-                <p className="font-sans text-[13px] font-medium leading-[1.3] text-accent">
-                  Browse other communities
-                </p>
-              </button>
             </div>
+            <button
+              type="button"
+              onClick={() => !touring && navigate('/community/browse')}
+              className="flex w-full cursor-pointer items-center gap-2 rounded-2xl border border-dashed border-accent-200 bg-card px-3.5 py-3 text-left"
+            >
+              <img src={searchBlue} alt="" className="size-4" />
+              <p className="font-sans text-[13px] font-medium leading-[1.3] text-accent">
+                Browse other communities
+              </p>
+            </button>
           </div>
 
           <div className="flex items-center justify-between">
@@ -297,16 +307,6 @@ export default function CommunityFeed() {
         </div>
       </div>
 
-      <div className="pointer-events-none absolute inset-x-0 bottom-[118px] z-20 flex justify-center px-5">
-        <button
-          type="button"
-          onClick={() => !touring && navigate('/community/new')}
-          className="pointer-events-auto flex w-full max-w-[350px] cursor-pointer items-center justify-center gap-2 rounded-[14px] bg-accent py-3.5 shadow-[0px_8px_18px_0px_rgba(0,43,143,0.22)]"
-        >
-          <img src={forumWhite} alt="" className="size-[18px]" />
-          <span className="font-sans text-[15px] font-semibold text-white">Ask a question</span>
-        </button>
-      </div>
       <NavBar tab="community" />
       <SideMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
 

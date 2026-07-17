@@ -33,7 +33,9 @@ export default function PostQuestion({ initialMode = 'Question' }: { initialMode
   const [community, setCommunity] = useState(COMMUNITIES[0])
   const [communityOpen, setCommunityOpen] = useState(false)
   const [selectedTags, setSelectedTags] = useState<Set<string>>(() => new Set(['Diet']))
-  const [extraTag, setExtraTag] = useState<string | null>(null)
+  const [customTags, setCustomTags] = useState<string[]>([])
+  const [addingTag, setAddingTag] = useState(false)
+  const [draftTag, setDraftTag] = useState('')
 
   const switchMode = (next: PostAs) => {
     if (next === mode) return
@@ -57,7 +59,22 @@ export default function PostQuestion({ initialMode = 'Question' }: { initialMode
     navigate('/community/posted', { state: { kind: mode } })
   }
 
-  const allTags = extraTag ? [...TAGS, extraTag] : [...TAGS]
+  const allTags = [...TAGS, ...customTags]
+
+  const commitTag = () => {
+    const next = draftTag.trim()
+    if (!next) {
+      setAddingTag(false)
+      setDraftTag('')
+      return
+    }
+    if (!allTags.some((t) => t.toLowerCase() === next.toLowerCase())) {
+      setCustomTags((prev) => [...prev, next])
+    }
+    setSelectedTags((prev) => new Set(prev).add(next))
+    setDraftTag('')
+    setAddingTag(false)
+  }
 
   return (
     <div className="relative flex h-full w-full flex-col bg-canvas">
@@ -158,13 +175,30 @@ export default function PostQuestion({ initialMode = 'Question' }: { initialMode
                 </button>
               )
             })}
-            {!extraTag && (
+            {addingTag ? (
+              <input
+                autoFocus
+                value={draftTag}
+                onChange={(e) => setDraftTag(e.target.value)}
+                onBlur={commitTag}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault()
+                    commitTag()
+                  }
+                  if (e.key === 'Escape') {
+                    setDraftTag('')
+                    setAddingTag(false)
+                  }
+                }}
+                placeholder="Tag name"
+                className="h-[30px] min-w-[96px] rounded-full border border-accent bg-white px-3 font-sans text-[13px] text-ink outline-none"
+              />
+            ) : (
               <button
                 type="button"
-                onClick={() => {
-                  setExtraTag('Glucose')
-                  setSelectedTags((prev) => new Set(prev).add('Glucose'))
-                }}
+                aria-label="Add tag"
+                onClick={() => setAddingTag(true)}
                 className="cursor-pointer rounded-full border border-accent bg-accent-50 px-3.5 py-[7px] font-sans text-[13px] text-[#001d61]"
               >
                 +
