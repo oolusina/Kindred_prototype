@@ -12,8 +12,16 @@ npm install
 npm run dev -- --host 0.0.0.0 --port 5173
 ```
 
-- Laptop: http://localhost:5173/
-- Phone (same Wi‑Fi): http://\<your-mac-ip\>:5173/
+**Two demo links** (same build, different shell):
+
+| Audience | Local | GitHub Pages |
+|----------|--------|----------------|
+| **Web / laptop** (framed iPhone) | http://localhost:5173/#/onboarding/landing | https://oolusina.github.io/Kindred_prototype/#/onboarding/landing |
+| **Mobile** (full screen, no fake chrome) | http://localhost:5173/#/mobile/onboarding/landing | https://oolusina.github.io/Kindred_prototype/#/mobile/onboarding/landing |
+
+Short mobile entry: `#/mobile` → landing. Once you’re in `/mobile/...`, in-app navigation stays under that prefix.
+
+Phone (same Wi‑Fi): http://\<your-mac-ip\>:5173/
 
 The app opens at onboarding. After “You’re all set”, you land on Home. Bottom tabs: Home · Community · Timeline · Learn. The center **+** opens Add.
 

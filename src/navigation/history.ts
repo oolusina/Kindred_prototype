@@ -1,5 +1,6 @@
 import { useCallback, useEffect } from 'react'
 import { useLocation, useNavigate, type NavigateOptions, type To } from 'react-router-dom'
+import { stripShellPrefix } from './shell'
 
 /** True when React Router has an earlier entry in this tab's history stack. */
 export function canGoBack(): boolean {
@@ -40,7 +41,8 @@ const PREP_SHELL_RETURN_KEY = 'kindred.prepShellReturn'
 
 /** Before-visit / During-visit tabs — one logical prep screen. */
 export function isPrepShellPath(path: string) {
-  return path === '/prep' || path === '/prep/during'
+  const bare = stripShellPrefix(path)
+  return bare === '/prep' || bare === '/prep/during'
 }
 
 let lastPathname = '/'
@@ -54,7 +56,8 @@ export function PrepShellHistoryTracker() {
 
   useEffect(() => {
     const path = location.pathname
-    if (isPrepShellPath(path) && !lastPathname.startsWith('/prep')) {
+    const lastBare = stripShellPrefix(lastPathname)
+    if (isPrepShellPath(path) && !lastBare.startsWith('/prep')) {
       sessionStorage.setItem(PREP_SHELL_RETURN_KEY, lastPathname || '/home')
     }
     lastPathname = path

@@ -1,10 +1,13 @@
 import statusIcons from '../assets/figma/home_systembar_status_icons.svg'
+import { useShellMode } from '../navigation/shell'
 
 /**
- * iOS status bar. `variant="light"` renders cream (for dark/blue headers),
- * `variant="dark"` renders near-black (for light backgrounds).
+ * Fake iOS status bar — shown in the web framed demo only.
  */
 export default function SystemBar({ variant = 'dark' }: { variant?: 'light' | 'dark' }) {
+  const mode = useShellMode()
+  if (mode === 'mobile') return null
+
   const isLight = variant === 'light'
   return (
     <div className="pointer-events-none relative z-20 flex h-11 w-full shrink-0 items-center justify-between px-[27px]">
