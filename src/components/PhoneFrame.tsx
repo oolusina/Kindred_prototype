@@ -1,9 +1,12 @@
 import { type ReactNode } from 'react'
 import { useShellMode } from '../navigation/shell'
 
+/** Slight zoom-out so more of each Figma screen fits in a mobile browser tab. */
+const MOBILE_SCALE = 0.85
+
 /**
  * Web (`#/...`): centered iPhone frame for laptop demos.
- * Mobile (`#/mobile/...`): full-viewport app with safe-area padding.
+ * Mobile (`#/mobile/...`): full-viewport app, scaled down a bit for browser chrome.
  */
 export default function PhoneFrame({ children }: { children: ReactNode }) {
   const mode = useShellMode()
@@ -11,9 +14,19 @@ export default function PhoneFrame({ children }: { children: ReactNode }) {
 
   if (mobile) {
     return (
-      <div className="min-h-dvh w-full bg-canvas">
-        <div className="relative mx-auto flex h-dvh w-full min-h-0 flex-col overflow-hidden bg-canvas pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
-          <div className="flex min-h-0 flex-1 flex-col overflow-hidden">{children}</div>
+      <div className="min-h-dvh w-full overflow-hidden bg-canvas">
+        <div className="relative h-dvh w-full overflow-hidden bg-canvas pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]">
+          <div
+            className="flex min-h-0 flex-col overflow-hidden"
+            style={{
+              width: `${100 / MOBILE_SCALE}%`,
+              height: `${100 / MOBILE_SCALE}%`,
+              transform: `scale(${MOBILE_SCALE})`,
+              transformOrigin: 'top left',
+            }}
+          >
+            <div className="flex min-h-0 flex-1 flex-col overflow-hidden">{children}</div>
+          </div>
         </div>
       </div>
     )
