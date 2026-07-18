@@ -17,7 +17,7 @@ export default function Landing() {
             <span className="font-sans text-[63px] leading-[1.2] text-accent-200">indred</span>
           </div>
           <p className="text-center font-sans text-[15px] leading-[1.42] text-canvas">
-            Private health. Community wisdom.
+            Private Health. Public Wisdom.
           </p>
         </div>
         <div className="flex items-center gap-1.5">
