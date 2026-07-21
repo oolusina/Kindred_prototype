@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { useSmartBack } from '../../navigation/history'
 import SystemBar from '../../components/SystemBar'
 import HomeIndicator from '../../components/HomeIndicator'
 import closeInk from '../../assets/figma/close-ink.svg'
@@ -12,7 +12,7 @@ const SOURCE_LABEL: Record<string, string> = {
 }
 
 export default function PrepBrief() {
-  const navigate = useNavigate()
+  const goBack = useSmartBack('/prep')
   const { prepQuestions } = usePrototypeState()
 
   return (
@@ -28,7 +28,7 @@ export default function PrepBrief() {
         <button
           type="button"
           aria-label="Close"
-          onClick={() => navigate('/prep')}
+          onClick={goBack}
           className="cursor-pointer"
         >
           <img src={closeInk} alt="" className="size-[22px]" />
