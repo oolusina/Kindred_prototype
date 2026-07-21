@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useSmartBack } from '../../navigation/history'
 import SystemBar from '../../components/SystemBar'
 import HomeIndicator from '../../components/HomeIndicator'
 import arrowBack from '../../assets/figma/arrow-back.svg'
@@ -15,7 +15,7 @@ const INITIAL = [
 ]
 
 export default function TimelineAskChat() {
-  const navigate = useNavigate()
+  const goBack = useSmartBack('/timeline')
   const [msgs, setMsgs] = useState(INITIAL)
   const [draft, setDraft] = useState('')
 
@@ -37,7 +37,7 @@ export default function TimelineAskChat() {
     <div className="relative flex h-full w-full flex-col bg-canvas">
       <SystemBar />
       <div className="flex h-14 shrink-0 items-center gap-3 px-5">
-        <button type="button" aria-label="Back" onClick={() => navigate(-1)} className="cursor-pointer">
+        <button type="button" aria-label="Back" onClick={goBack} className="cursor-pointer">
           <img src={arrowBack} alt="" className="size-[22px]" />
         </button>
         <p className="font-sans text-[15px] font-medium text-ink">Refine in chat</p>

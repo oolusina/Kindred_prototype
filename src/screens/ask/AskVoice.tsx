@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useSmartBack } from '../../navigation/history'
 import SystemBar from '../../components/SystemBar'
 import HomeIndicator from '../../components/HomeIndicator'
 import arrowBack from '../../assets/figma/arrow-back.svg'
@@ -13,6 +14,7 @@ const BARS = [10, 18, 30, 14, 26, 34, 16, 24, 12]
 
 export default function AskVoice() {
   const navigate = useNavigate()
+  const goBack = useSmartBack('/ask')
   const [listening, setListening] = useState(true)
 
   useEffect(() => {
@@ -25,7 +27,7 @@ export default function AskVoice() {
     <div className="relative flex h-full w-full flex-col bg-canvas">
       <SystemBar />
       <div className="flex shrink-0 items-center gap-3.5 px-5 pt-2.5">
-        <button type="button" aria-label="Back" onClick={() => navigate('/ask')} className="cursor-pointer">
+        <button type="button" aria-label="Back" onClick={goBack} className="cursor-pointer">
           <img src={arrowBack} alt="" className="size-[26px]" />
         </button>
         <p className="font-sans text-[15px] font-medium text-ink">Voice</p>

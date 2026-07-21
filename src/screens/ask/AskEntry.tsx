@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { useSmartBack } from '../../navigation/history'
 import SystemBar from '../../components/SystemBar'
 import HomeIndicator from '../../components/HomeIndicator'
 import arrowBack from '../../assets/figma/arrow-back.svg'
@@ -47,6 +48,7 @@ const RECENT = [
 /** Figma 3120:8263 — Ask entry hosts welcome + steps 1–2. */
 export default function AskEntry() {
   const navigate = useNavigate()
+  const goBack = useSmartBack('/home')
   const location = useLocation()
   const resumeStep = (location.state as { tourStep?: AskTourStep } | null)?.tourStep
   const rootRef = useRef<HTMLDivElement>(null)
@@ -82,7 +84,7 @@ export default function AskEntry() {
           <button
             type="button"
             aria-label="Back"
-            onClick={() => navigate('/home')}
+            onClick={goBack}
             className="mb-1 cursor-pointer self-start"
           >
             <img src={arrowBack} alt="" className="size-6 brightness-0 invert" />

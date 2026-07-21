@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useSmartBack } from '../../navigation/history'
 import SystemBar from '../../components/SystemBar'
 import HomeIndicator from '../../components/HomeIndicator'
 import arrowBack from '../../assets/figma/arrow-back.svg'
@@ -23,6 +24,7 @@ const SLIDES = [
 
 export default function AskGuide() {
   const navigate = useNavigate()
+  const goBack = useSmartBack('/ask/results')
   const [i, setI] = useState(0)
   const slide = SLIDES[i]
 
@@ -30,7 +32,7 @@ export default function AskGuide() {
     <div className="relative flex h-full w-full flex-col bg-canvas">
       <SystemBar />
       <div className="flex shrink-0 items-center justify-between px-5 pt-2.5">
-        <button type="button" aria-label="Back" onClick={() => navigate('/ask/results')} className="cursor-pointer">
+        <button type="button" aria-label="Back" onClick={goBack} className="cursor-pointer">
           <img src={arrowBack} alt="" className="size-[26px]" />
         </button>
         <p className="font-sans text-[13px] text-ink-500">

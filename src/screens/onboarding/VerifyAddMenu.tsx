@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom'
 import TourHomeBackdrop from './TourHomeBackdrop'
-import NavBar from '../../components/NavBar'
 import { TourCaret } from '../../components/featureTour'
 import closeWhite from '../../assets/figma/close-white.svg'
 import closeInk from '../../assets/figma/close-ink.svg'
@@ -47,7 +46,11 @@ export default function VerifyAddMenu() {
   const navigate = useNavigate()
   return (
     <div className="relative flex h-full w-full flex-col overflow-hidden bg-canvas">
-      <TourHomeBackdrop />
+      <TourHomeBackdrop
+        onAddClick={() => navigate(-1)}
+        addIcon={closeWhite}
+        addLabel="Close"
+      />
       <div className="absolute inset-0 z-40 bg-[rgba(0,0,0,0.45)]" />
 
       <div className="absolute left-1/2 top-[225px] z-[60] flex w-[320px] -translate-x-1/2 flex-col gap-2 rounded-[16px] bg-white px-4 pb-3.5 pt-4 drop-shadow-[0px_6px_12px_rgba(0,0,0,0.18)]">
@@ -118,18 +121,6 @@ export default function VerifyAddMenu() {
             <Tile icon={history} label="Past entries" disabled />
           </div>
         </div>
-      </div>
-
-      <div className="pointer-events-none absolute inset-0 z-50">
-        <NavBar tab="home" locked />
-        <button
-          type="button"
-          aria-label="Close"
-          onClick={() => navigate(-1)}
-          className="pointer-events-auto absolute bottom-[53px] left-1/2 flex size-[67px] -translate-x-1/2 cursor-pointer items-center justify-center rounded-full border-[5px] border-canvas bg-accent drop-shadow-[0px_6px_7px_rgba(0,43,143,0.35)]"
-        >
-          <img src={closeWhite} alt="" className="size-7" />
-        </button>
       </div>
     </div>
   )

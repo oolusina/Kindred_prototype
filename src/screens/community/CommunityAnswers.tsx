@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { useSmartBack } from '../../navigation/history'
 import SystemBar from '../../components/SystemBar'
 import HomeIndicator from '../../components/HomeIndicator'
 import Sheet from '../../components/Sheet'
@@ -52,6 +53,7 @@ const RESPONSES = [
 /** Figma 2910:7360 — steps 4–5 on Answers. Match sheet: 2870:6736. */
 export default function CommunityAnswers() {
   const navigate = useNavigate()
+  const goBack = useSmartBack('/community/t2d')
   const location = useLocation()
   const resumeStep = (location.state as { tourStep?: CommunityTourStep } | null)?.tourStep
   const rootRef = useRef<HTMLDivElement>(null)
@@ -89,7 +91,7 @@ export default function CommunityAnswers() {
           <button
             type="button"
             aria-label="Back"
-            onClick={() => (touring ? dismissTour() : navigate('/community/t2d'))}
+            onClick={() => (touring ? dismissTour() : goBack())}
             className="cursor-pointer self-start"
           >
             <img src={arrowBackWhite} alt="" className="size-[26px]" />

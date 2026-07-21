@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useSmartBack } from '../../navigation/history'
 import SystemBar from '../../components/SystemBar'
 import HomeIndicator from '../../components/HomeIndicator'
 import Sheet from '../../components/Sheet'
@@ -38,6 +39,7 @@ const REPLIES = [
 /** Figma 2347:3323 — Community · Response detail */
 export default function CommunityResponse() {
   const navigate = useNavigate()
+  const goBack = useSmartBack('/community/answers')
   const [sheetOpen, setSheetOpen] = useState(false)
   const [matchOpen, setMatchOpen] = useState(false)
 
@@ -50,7 +52,7 @@ export default function CommunityResponse() {
           <button
             type="button"
             aria-label="Back"
-            onClick={() => navigate('/community/answers')}
+            onClick={goBack}
             className="cursor-pointer"
           >
             <img src={arrowBack} alt="" className="size-[26px]" />

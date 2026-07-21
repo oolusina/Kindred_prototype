@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import { useSmartBack } from '../../navigation/history'
 import SystemBar from '../../components/SystemBar'
 import HomeIndicator from '../../components/HomeIndicator'
 import arrowBackWhite from '../../assets/figma/arrow-back-white.svg'
@@ -43,6 +44,7 @@ const QUESTIONS = [
 
 export default function CommunityT2D() {
   const navigate = useNavigate()
+  const goBack = useSmartBack('/community')
 
   return (
     <div className="relative flex h-full min-h-0 w-full flex-col bg-canvas">
@@ -52,7 +54,7 @@ export default function CommunityT2D() {
           <button
             type="button"
             aria-label="Back"
-            onClick={() => navigate('/community')}
+            onClick={goBack}
             className="cursor-pointer self-start"
           >
             <img src={arrowBackWhite} alt="" className="size-[26px]" />
@@ -98,7 +100,7 @@ export default function CommunityT2D() {
         <button
           type="button"
           onClick={() => navigate('/community/answers')}
-          className="flex w-full cursor-pointer flex-col gap-2.5 rounded-2xl border border-accent-100 bg-card px-4 py-3.5 text-left"
+          className="flex w-full shrink-0 cursor-pointer flex-col gap-2.5 rounded-2xl border border-accent-100 bg-card px-4 py-3.5 text-left"
         >
           <span className="flex w-fit items-center gap-1 rounded-full bg-accent-50 py-0.5 pl-2 pr-2.5">
             <img src={forum} alt="" className="size-3" />
@@ -116,7 +118,7 @@ export default function CommunityT2D() {
         <button
           type="button"
           onClick={() => navigate('/community/tip')}
-          className="flex w-full cursor-pointer flex-col overflow-hidden rounded-2xl border border-accent-200 bg-accent-50 text-left"
+          className="flex w-full shrink-0 cursor-pointer flex-col overflow-hidden rounded-2xl border border-accent-200 bg-accent-50 text-left"
         >
           <div className="flex items-center justify-between bg-accent-subtle px-4 py-2">
             <span className="flex items-center gap-1.5">
@@ -146,7 +148,7 @@ export default function CommunityT2D() {
             key={q.text}
             type="button"
             onClick={() => navigate('/community/answers')}
-            className="flex w-full cursor-pointer flex-col gap-2.5 rounded-2xl border border-accent-100 bg-card px-4 py-3.5 text-left"
+            className="flex w-full shrink-0 cursor-pointer flex-col gap-2.5 rounded-2xl border border-accent-100 bg-card px-4 py-3.5 text-left"
           >
             <span className="flex w-fit items-center gap-1 rounded-full bg-accent-50 py-0.5 pl-2 pr-2.5">
               <img src={forum} alt="" className="size-3" />

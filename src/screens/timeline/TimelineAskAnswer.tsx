@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import { useSmartBack } from '../../navigation/history'
 import SystemBar from '../../components/SystemBar'
 import HomeIndicator from '../../components/HomeIndicator'
 import arrowBack from '../../assets/figma/arrow-back.svg'
@@ -9,11 +10,12 @@ import askFavicons from '../../assets/figma/ask-favicons.svg'
 
 export default function TimelineAskAnswer() {
   const navigate = useNavigate()
+  const goBack = useSmartBack('/timeline/ask-entry')
   return (
     <div className="relative flex h-full w-full flex-col bg-canvas">
       <SystemBar />
       <div className="flex h-14 shrink-0 items-center justify-between px-6">
-        <button type="button" aria-label="Back" onClick={() => navigate('/timeline/ask-entry')} className="cursor-pointer">
+        <button type="button" aria-label="Back" onClick={goBack} className="cursor-pointer">
           <img src={arrowBack} alt="" className="size-[22px]" />
         </button>
         <p className="font-sans text-[15px] font-medium text-ink-600">Ask</p>

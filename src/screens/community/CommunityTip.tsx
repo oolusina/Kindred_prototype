@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import { useSmartBack } from '../../navigation/history'
 import SystemBar from '../../components/SystemBar'
 import HomeIndicator from '../../components/HomeIndicator'
 import arrowBack from '../../assets/figma/arrow-back.svg'
@@ -9,6 +10,7 @@ import thumbUp from '../../assets/figma/thumb-up.svg'
 
 export default function CommunityTip() {
   const navigate = useNavigate()
+  const goBack = useSmartBack('/community/t2d')
 
   return (
     <div className="relative flex h-full w-full flex-col bg-canvas">
@@ -17,7 +19,7 @@ export default function CommunityTip() {
         <button
           type="button"
           aria-label="Back"
-          onClick={() => navigate('/community/t2d')}
+          onClick={goBack}
           className="cursor-pointer"
         >
           <img src={arrowBack} alt="" className="size-[26px]" />

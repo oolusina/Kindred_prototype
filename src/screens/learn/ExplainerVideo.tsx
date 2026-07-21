@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { useSmartBack } from '../../navigation/history'
 import SystemBar from '../../components/SystemBar'
 import HomeIndicator from '../../components/HomeIndicator'
 import arrowBack from '../../assets/figma/learn-arrow-back.svg'
@@ -41,6 +42,7 @@ export default function ExplainerVideo() {
   const resumeStep = (location.state as { tourStep?: LearnTourStep } | null)?.tourStep
   const rootRef = useRef<HTMLDivElement>(null)
   const chaptersRef = useRef<HTMLDivElement>(null)
+  const goBack = useSmartBack('/learn/module')
   const [playing, setPlaying] = useState(false)
   const [saved, setSaved] = useState(false)
   const [progress, setProgress] = useState(22)
@@ -72,7 +74,7 @@ export default function ExplainerVideo() {
         <button
           type="button"
           aria-label="Back"
-          onClick={() => !touring && navigate('/learn/module')}
+          onClick={() => !touring && goBack()}
           className="cursor-pointer"
         >
           <img src={arrowBack} alt="" className="size-[26px]" />

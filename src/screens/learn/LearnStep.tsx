@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useSmartBack, useReplaceNavigate } from '../../navigation/history'
 import SystemBar from '../../components/SystemBar'
 import HomeIndicator from '../../components/HomeIndicator'
 import Sheet from '../../components/Sheet'
@@ -91,12 +92,13 @@ const METRICS = [
 /** Figma 3142:8271 — Detailed module steps 1–3. */
 export default function LearnStep({ step }: { step: 1 | 2 | 3 }) {
   const navigate = useNavigate()
+  const replaceNavigate = useReplaceNavigate()
   const { isSourceSaved, toggleSavedSource } = usePrototypeState()
   const [sourcesOpen, setSourcesOpen] = useState(false)
   const [bookmarked, setBookmarked] = useState(false)
   const [openFaq, setOpenFaq] = useState(0)
 
-  const backTo = '/learn'
+  const goBack = useSmartBack('/learn')
   const nextTo =
     step === 1
       ? '/learn/module/step-2'
@@ -113,7 +115,7 @@ export default function LearnStep({ step }: { step: 1 | 2 | 3 }) {
         <button
           type="button"
           aria-label="Back"
-          onClick={() => navigate(backTo)}
+          onClick={goBack}
           className="cursor-pointer"
         >
           <img src={arrowBack} alt="" className="size-[26px]" />
@@ -130,7 +132,7 @@ export default function LearnStep({ step }: { step: 1 | 2 | 3 }) {
             size="sm"
             value="detailed"
             onChange={(next) => {
-              if (next === 'simple') navigate('/learn/module')
+              if (next === 'simple') replaceNavigate('/learn/module')
             }}
             options={[
               { value: 'simple', label: 'Simple' },
