@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import TourHomeBackdrop from './TourHomeBackdrop'
 import NavBar from '../../components/NavBar'
+import { TourCaret } from '../../components/featureTour'
 import closeWhite from '../../assets/figma/close-white.svg'
 import closeInk from '../../assets/figma/close-ink.svg'
 import shieldBlue from '../../assets/figma/shield-blue.svg'
@@ -74,7 +75,7 @@ export default function VerifyAddMenu() {
             Skip
           </button>
         </div>
-        <span className="absolute -bottom-[11px] left-6 h-0 w-0 border-x-[9px] border-t-[12px] border-x-transparent border-t-white" />
+        <TourCaret direction="down" className="left-6" />
       </div>
 
       <div className="absolute left-1/2 top-[410px] z-[60] flex w-[350px] -translate-x-1/2 flex-col gap-3.5 rounded-[24px] bg-canvas px-4 pb-5 pt-4 drop-shadow-[0px_8px_15px_rgba(0,0,0,0.2)]">
@@ -106,7 +107,7 @@ export default function VerifyAddMenu() {
           <div className="flex w-full gap-3">
             <Tile
               icon={medicalInformation}
-              label="Upload a diagnosis"
+              label="Upload a document"
               onClick={() => navigate('/onboarding/upload-document')}
             />
             <Tile

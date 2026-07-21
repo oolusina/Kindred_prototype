@@ -70,7 +70,7 @@ export default function Video() {
             poster={videoPoster}
             playsInline
             preload="metadata"
-            className="absolute inset-0 size-full rounded-[18px] object-cover"
+            className="absolute inset-0 size-full rounded-[18px] object-contain"
             onClick={togglePlay}
           />
           {!playing && (

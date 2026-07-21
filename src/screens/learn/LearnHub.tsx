@@ -15,13 +15,15 @@ import bookmarkBlue from '../../assets/figma/learn-bookmark-blue.svg'
 import { markTourSeen, tourSeen, TOUR_LEARN } from '../timeline/tour'
 import { usePrototypeState } from '../../state/PrototypeState'
 import {
-  LearnTourCoach,
-  LearnTourScrim,
-  LearnTourWelcome,
   SpotlightRing,
   TourCaret,
   coachStyleBelow,
   useSpotlightBox,
+} from '../../components/featureTour'
+import {
+  LearnTourCoach,
+  LearnTourScrim,
+  LearnTourWelcome,
   type LearnTourStep,
 } from './LearnTour'
 

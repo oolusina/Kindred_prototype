@@ -7,13 +7,15 @@ import toggleOn from '../../assets/figma/toggle-on.svg'
 import { usePrototypeState } from '../../state/PrototypeState'
 import { markTourSeen, tourSeen, TOUR_PREP } from '../timeline/tour'
 import {
-  PrepTourCoach,
-  PrepTourScrim,
   SpotlightRing,
   TourCaret,
   coachStyleAbove,
   coachStyleBelow,
   useSpotlightBox,
+} from '../../components/featureTour'
+import {
+  PrepTourCoach,
+  PrepTourScrim,
   type PrepTourStep,
 } from './PrepTour'
 

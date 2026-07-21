@@ -8,12 +8,16 @@ import pictureAsPdf from '../../assets/figma/picture-as-pdf.svg'
 import { usePrototypeState } from '../../state/PrototypeState'
 import { markTourSeen, tourSeen, TOUR_PREP } from '../timeline/tour'
 import {
+  TourCaret,
+  coachStyleBelow,
+  coachStyleAbove,
+  coachCaretLeft,
+  useSpotlightBox,
+} from '../../components/featureTour'
+import {
   PrepTourCoach,
   PrepTourScrim,
   PrepTourWelcome,
-  TourCaret,
-  coachStyleBelow,
-  useSpotlightBox,
   type PrepTourStep,
 } from './PrepTour'
 
@@ -170,7 +174,7 @@ export default function PrepBefore() {
             <div className="pointer-events-auto">
               <PrepTourCoach
                 step={3}
-                style={coachStyleBelow(sendBox)}
+                style={coachStyleAbove(sendBox, 16, 220)}
                 onPrimary={() =>
                   navigate('/prep/during', {
                     state: { tourStep: 4 },
@@ -183,7 +187,9 @@ export default function PrepBefore() {
                     replace: true,
                   })
                 }
-                caret={<TourCaret />}
+                caret={
+                  <TourCaret direction="down" className="" style={{ left: coachCaretLeft(sendBox) }} />
+                }
               />
             </div>
           )}

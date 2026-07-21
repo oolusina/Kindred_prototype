@@ -14,7 +14,7 @@ export default function Upload() {
   return (
     <div className="relative flex h-full w-full flex-col bg-canvas">
       <SystemBar variant="dark" />
-      <TopBar fallback="/home" title="Upload a diagnosis" subtitle="a letter, lab result, or visit summary works" />
+      <TopBar fallback="/home" title="Upload a document" subtitle="a letter, lab result, or visit summary works" />
       <div className="app-scroll flex flex-1 flex-col gap-3 px-5 pb-6">
         <button
           type="button"

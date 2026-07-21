@@ -13,13 +13,15 @@ import thumbUp from '../../assets/figma/thumb-up.svg'
 import radioOn from '../../assets/figma/radio-on.svg'
 import { markTourSeen, tourSeen, TOUR_COMMUNITY } from '../timeline/tour'
 import {
-  CommunityTourCoach,
-  CommunityTourScrim,
   SpotlightRing,
   TourCaret,
   coachStyleBelow,
   coachStyleCentered,
   useSpotlightBox,
+} from '../../components/featureTour'
+import {
+  CommunityTourCoach,
+  CommunityTourScrim,
   type CommunityTourStep,
 } from './CommunityTour'
 import MatchExplainModal from './MatchExplainModal'
@@ -244,7 +246,7 @@ export default function CommunityAnswers() {
                     navigate('/community', { state: { tourStep: 3 }, replace: true })
                   }
                   caret={
-                    <span className="absolute -top-[11px] left-[82px] h-0 w-0 border-x-[9px] border-b-[12px] border-x-transparent border-b-white" />
+                    <TourCaret className="left-[82px]" />
                   }
                 />
               </div>

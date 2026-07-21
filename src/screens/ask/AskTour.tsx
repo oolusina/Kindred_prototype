@@ -3,12 +3,6 @@ import {
   FeatureTourCoach,
   FeatureTourWelcome,
   TourScrim,
-  SpotlightRing,
-  coachStyleAbove,
-  coachStyleBelow,
-  useSpotlightBox,
-  TourCaret,
-  type SpotlightBox,
 } from '../../components/featureTour'
 
 /** Figma 3120:8263 — FIRST TIME INTRO TO AI SEARCH */
@@ -53,15 +47,7 @@ export const ASK_TOUR_STEPS: Record<
   },
 }
 
-export {
-  TourScrim as AskTourScrim,
-  SpotlightRing,
-  coachStyleAbove,
-  coachStyleBelow,
-  useSpotlightBox,
-  TourCaret,
-  type SpotlightBox,
-}
+export { TourScrim as AskTourScrim }
 
 export function AskTourWelcome({
   onStart,

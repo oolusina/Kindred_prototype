@@ -16,12 +16,14 @@ import bookmarkSmall from '../../assets/figma/learn-bookmark-small.svg'
 import { usePrototypeState, type SavedSource } from '../../state/PrototypeState'
 import { markTourSeen, tourSeen, TOUR_LEARN } from '../timeline/tour'
 import {
-  LearnTourCoach,
-  LearnTourScrim,
   SpotlightRing,
   TourCaret,
   coachStyleBelow,
   useSpotlightBox,
+} from '../../components/featureTour'
+import {
+  LearnTourCoach,
+  LearnTourScrim,
   type LearnTourStep,
 } from './LearnTour'
 

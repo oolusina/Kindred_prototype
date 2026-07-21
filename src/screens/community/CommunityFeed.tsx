@@ -19,13 +19,15 @@ import autoAwesomeLight from '../../assets/figma/auto-awesome-light.svg'
 import comment from '../../assets/figma/comment.svg'
 import { markTourSeen, tourSeen, TOUR_COMMUNITY } from '../timeline/tour'
 import {
-  CommunityTourCoach,
-  CommunityTourScrim,
-  CommunityTourWelcome,
   SpotlightRing,
   TourCaret,
   coachStyleBelow,
   useSpotlightBox,
+} from '../../components/featureTour'
+import {
+  CommunityTourCoach,
+  CommunityTourScrim,
+  CommunityTourWelcome,
   type CommunityTourStep,
 } from './CommunityTour'
 

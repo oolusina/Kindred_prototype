@@ -28,7 +28,7 @@ export default function TourCard({
 }) {
   return (
     <div
-      className={`absolute z-50 flex w-[320px] flex-col items-center gap-2.5 rounded-[20px] bg-white px-5 py-[22px] shadow-[0px_6px_24px_0px_rgba(0,0,0,0.18)] ${className}`}
+      className={`absolute z-50 flex w-[min(320px,calc(100%-32px))] flex-col items-center gap-2.5 rounded-[20px] bg-white px-5 py-[22px] shadow-[0px_6px_24px_0px_rgba(0,0,0,0.18)] ${className}`}
     >
       {children}
       {overline && (

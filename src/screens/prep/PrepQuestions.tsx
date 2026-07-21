@@ -7,12 +7,15 @@ import { usePrototypeState, type PrepQuestion } from '../../state/PrototypeState
 import { useSmartBack } from '../../navigation/history'
 import { markTourSeen, tourSeen, TOUR_PREP } from '../timeline/tour'
 import {
+  SpotlightRing,
+  coachStyleAbove,
+  coachCaretLeft,
+  useSpotlightBox,
+  TourCaret,
+} from '../../components/featureTour'
+import {
   PrepTourCoach,
   PrepTourScrim,
-  SpotlightRing,
-  TourCaret,
-  coachStyleBelow,
-  useSpotlightBox,
   type PrepTourStep,
 } from './PrepTour'
 
@@ -207,14 +210,16 @@ export default function PrepQuestions() {
               <div className="pointer-events-auto">
                 <PrepTourCoach
                   step={2}
-                  style={coachStyleBelow(addBox, 12)}
+                  style={coachStyleAbove(addBox, 16, 200)}
                   onPrimary={() =>
                     navigate('/prep', { state: { tourStep: 3 }, replace: true })
                   }
                   onSecondary={() =>
                     navigate('/prep', { state: { tourStep: 1 }, replace: true })
                   }
-                  caret={<TourCaret />}
+                  caret={
+                    <TourCaret direction="down" className="" style={{ left: coachCaretLeft(addBox) }} />
+                  }
                 />
               </div>
             </>

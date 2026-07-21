@@ -10,12 +10,14 @@ import bookmarkFilled from '../../assets/figma/learn-bookmark-filled-blue.svg'
 import chevronRight from '../../assets/figma/learn-chevron-right.svg'
 import { markTourSeen, tourSeen, TOUR_LEARN } from '../timeline/tour'
 import {
-  LearnTourCoach,
-  LearnTourScrim,
   SpotlightRing,
   TourCaret,
   coachStyleAbove,
   useSpotlightBox,
+} from '../../components/featureTour'
+import {
+  LearnTourCoach,
+  LearnTourScrim,
   type LearnTourStep,
 } from './LearnTour'
 
