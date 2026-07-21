@@ -1,3 +1,4 @@
+import type { RefObject } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAddMenu } from './AddMenuContext'
 import HomeIndicator from './HomeIndicator'
@@ -22,14 +23,17 @@ function TabButton({
   icon,
   active,
   onClick,
+  buttonRef,
 }: {
   label: string
   icon: React.ReactNode
   active: boolean
   onClick: () => void
+  buttonRef?: RefObject<HTMLButtonElement | null>
 }) {
   return (
     <button
+      ref={buttonRef}
       type="button"
       onClick={onClick}
       className="flex h-full w-14 cursor-pointer flex-col items-center justify-center gap-[5px]"
@@ -50,10 +54,21 @@ function TabButton({
 export default function NavBar({
   tab,
   locked = false,
+  communityTabRef,
+  timelineTabRef,
+  addButtonRef,
+  onAddOverride,
 }: {
   tab: NavTab
   /** When true, tabs and + do nothing (used during onboarding tours). */
   locked?: boolean
+  /** Lets tour overlays measure the real tab position instead of guessing pixel offsets. */
+  communityTabRef?: RefObject<HTMLButtonElement | null>
+  timelineTabRef?: RefObject<HTMLButtonElement | null>
+  /** Lets tour overlays measure the real + button instead of drawing a duplicate on top of it. */
+  addButtonRef?: RefObject<HTMLButtonElement | null>
+  /** Keeps the + button clickable with a custom handler even while locked, e.g. mid-onboarding-tour. */
+  onAddOverride?: () => void
 }) {
   const navigate = useNavigate()
   const { isOpen, toggle, close } = useAddMenu()
@@ -64,6 +79,8 @@ export default function NavBar({
     // Replace so tab switches don't stack and trap Back in a loop.
     navigate(path, { replace: true })
   }
+
+  const addOverridden = locked && !!onAddOverride
 
   return (
     <div className="pointer-events-none absolute inset-x-0 bottom-0 z-50 flex flex-col items-center gap-2">
@@ -83,6 +100,7 @@ export default function NavBar({
             label="Community"
             active={tab === 'community'}
             onClick={() => goTab('/community')}
+            buttonRef={communityTabRef}
             icon={
               <img
                 src={tab === 'community' ? groupsActive : groupsInactive}
@@ -92,12 +110,13 @@ export default function NavBar({
             }
           />
         </div>
-        <div className="relative h-16 w-[68px]">
+        <div className={`relative h-16 w-[68px] ${addOverridden ? 'pointer-events-auto' : ''}`}>
           <button
+            ref={addButtonRef}
             type="button"
-            onClick={locked ? undefined : toggle}
+            onClick={addOverridden ? onAddOverride : locked ? undefined : toggle}
             aria-label={isOpen ? 'Close' : 'Add'}
-            disabled={locked}
+            disabled={locked && !addOverridden}
             className="absolute -top-[30px] left-0 flex size-[67px] items-center justify-center rounded-full border-[5px] border-canvas bg-accent drop-shadow-[0px_6px_7px_rgba(0,43,143,0.35)] transition-transform duration-300 disabled:cursor-default"
           >
             <img
@@ -112,6 +131,7 @@ export default function NavBar({
             label="Timeline"
             active={tab === 'timeline'}
             onClick={() => goTab('/timeline')}
+            buttonRef={timelineTabRef}
             icon={
               <img
                 src={tab === 'timeline' ? dateRangeActive : dateRangeInactive}

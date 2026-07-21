@@ -3,12 +3,6 @@ import {
   FeatureTourCoach,
   FeatureTourWelcome,
   TourScrim,
-  SpotlightRing,
-  coachStyleAbove,
-  coachStyleBelow,
-  useSpotlightBox,
-  TourCaret,
-  type SpotlightBox,
 } from '../../components/featureTour'
 
 /** Figma 3139:8265 — FIRST TIME INTRO TO MODULES (3 steps + welcome). */
@@ -39,15 +33,7 @@ export const LEARN_TOUR_STEPS: Record<
   },
 }
 
-export {
-  TourScrim as LearnTourScrim,
-  SpotlightRing,
-  coachStyleAbove,
-  coachStyleBelow,
-  useSpotlightBox,
-  TourCaret,
-  type SpotlightBox,
-}
+export { TourScrim as LearnTourScrim }
 
 export function LearnTourWelcome({
   onStart,

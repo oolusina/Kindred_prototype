@@ -3,13 +3,6 @@ import {
   FeatureTourCoach,
   FeatureTourWelcome,
   TourScrim,
-  SpotlightRing,
-  coachStyleAbove,
-  coachStyleBelow,
-  coachStyleCentered,
-  useSpotlightBox,
-  TourCaret,
-  type SpotlightBox,
 } from '../../components/featureTour'
 
 /** Figma 2910:7360 — Community first-time intro (5 steps + welcome). */
@@ -52,16 +45,7 @@ export const COMMUNITY_TOUR_STEPS: Record<
   },
 }
 
-export {
-  TourScrim as CommunityTourScrim,
-  SpotlightRing,
-  coachStyleAbove,
-  coachStyleBelow,
-  coachStyleCentered,
-  useSpotlightBox,
-  TourCaret,
-  type SpotlightBox,
-}
+export { TourScrim as CommunityTourScrim }
 
 export function CommunityTourWelcome({
   onStart,

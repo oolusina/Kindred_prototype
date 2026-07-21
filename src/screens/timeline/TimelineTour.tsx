@@ -3,12 +3,6 @@ import {
   FeatureTourCoach,
   FeatureTourWelcome,
   TourScrim,
-  SpotlightRing,
-  coachStyleAbove,
-  coachStyleBelow,
-  useSpotlightBox,
-  TourCaret,
-  type SpotlightBox,
 } from '../../components/featureTour'
 
 /** Figma 3139:8256 — Timeline first-time intro (3 steps + welcome). */
@@ -39,15 +33,7 @@ export const TIMELINE_TOUR_STEPS: Record<
   },
 }
 
-export {
-  TourScrim as TimelineTourScrim,
-  SpotlightRing,
-  coachStyleAbove,
-  coachStyleBelow,
-  useSpotlightBox,
-  TourCaret,
-  type SpotlightBox,
-}
+export { TourScrim as TimelineTourScrim }
 
 export function TimelineTourWelcome({
   onStart,

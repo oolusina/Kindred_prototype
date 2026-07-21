@@ -11,14 +11,16 @@ import insights from '../../assets/figma/insights-blue.svg'
 import { markTourSeen, tourSeen, TOUR_ASK } from '../timeline/tour'
 import RollingGhostPrompt from './RollingGhostPrompt'
 import {
-  ASK_TOUR_DEMO_Q,
-  AskTourCoach,
-  AskTourScrim,
-  AskTourWelcome,
   SpotlightRing,
   TourCaret,
   coachStyleBelow,
   useSpotlightBox,
+} from '../../components/featureTour'
+import {
+  ASK_TOUR_DEMO_Q,
+  AskTourCoach,
+  AskTourScrim,
+  AskTourWelcome,
   type AskTourStep,
 } from './AskTour'
 

@@ -15,7 +15,7 @@ export default function UploadDocument() {
     <div className="relative flex h-full w-full flex-col bg-canvas">
       <SystemBar variant="dark" />
       <TopBar
-        title="Add your diagnosis"
+        title="Add your documents"
         subtitle="a letter, lab result, or visit summary works"
       />
       <div className="app-scroll flex flex-1 flex-col gap-3 px-5 pb-6">

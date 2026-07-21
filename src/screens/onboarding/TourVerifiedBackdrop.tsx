@@ -1,3 +1,4 @@
+import type { RefObject } from 'react'
 import SystemBar from '../../components/SystemBar'
 import NavBar from '../../components/NavBar'
 import autoAwesome from '../../assets/figma/home_auto_awesome.svg'
@@ -11,9 +12,18 @@ import type { NavTab } from '../../components/NavBar'
 export default function TourVerifiedBackdrop({
   spotlight = 'prep',
   navTab = 'home',
+  prepCardRef,
+  sharingCardRef,
+  communityTabRef,
+  timelineTabRef,
 }: {
   spotlight?: 'prep' | 'community' | 'timeline' | 'sharing' | 'none'
   navTab?: NavTab
+  /** Real target refs so tour overlays can measure instead of guessing pixel offsets. */
+  prepCardRef?: RefObject<HTMLDivElement | null>
+  sharingCardRef?: RefObject<HTMLDivElement | null>
+  communityTabRef?: RefObject<HTMLButtonElement | null>
+  timelineTabRef?: RefObject<HTMLButtonElement | null>
 }) {
   return (
     <div className="absolute inset-0 flex flex-col overflow-hidden bg-canvas">
@@ -60,6 +70,7 @@ export default function TourVerifiedBackdrop({
 
       <div className="flex flex-1 flex-col gap-4 px-[22px] pt-4 pb-28">
         <div
+          ref={prepCardRef}
           className={`flex h-[103px] w-full items-center gap-6 rounded-card bg-card px-5 shadow-[0px_0px_14px_0px_rgba(0,43,143,0.05)] ${
             spotlight === 'prep'
               ? 'relative z-50 border-[3px] border-white shadow-[0px_0px_28px_4px_rgba(255,255,255,0.45)]'
@@ -104,6 +115,7 @@ export default function TourVerifiedBackdrop({
             </div>
           </div>
           <div
+            ref={sharingCardRef}
             className={`flex w-[164px] flex-col gap-2 rounded-2xl border border-accent-100 bg-card p-3.5 ${
               spotlight === 'sharing'
                 ? 'relative z-50 border-white shadow-[0px_0px_28px_4px_rgba(255,255,255,0.45)]'
@@ -133,13 +145,9 @@ export default function TourVerifiedBackdrop({
               : navTab
         }
         locked
+        communityTabRef={communityTabRef}
+        timelineTabRef={timelineTabRef}
       />
-      {spotlight === 'community' && (
-        <div className="pointer-events-none absolute bottom-[18px] left-[84px] z-[55] h-[78px] w-[72px] rounded-[20px] border-[3px] border-white shadow-[0px_0px_24px_2px_rgba(255,255,255,0.5)]" />
-      )}
-      {spotlight === 'timeline' && (
-        <div className="pointer-events-none absolute bottom-[18px] right-[84px] z-[55] h-[78px] w-[72px] rounded-[20px] border-[3px] border-white shadow-[0px_0px_24px_2px_rgba(255,255,255,0.5)]" />
-      )}
     </div>
   )
 }

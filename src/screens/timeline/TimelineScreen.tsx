@@ -24,14 +24,16 @@ import medicalServices from '../../assets/figma/medical-services-blue.svg'
 import closeInk from '../../assets/figma/close-ink.svg'
 import { markTourSeen, tourSeen, TOUR_TIMELINE } from './tour'
 import {
-  TimelineTourCoach,
-  TimelineTourScrim,
-  TimelineTourWelcome,
   SpotlightRing,
   TourCaret,
   coachStyleAbove,
   coachStyleBelow,
   useSpotlightBox,
+} from '../../components/featureTour'
+import {
+  TimelineTourCoach,
+  TimelineTourScrim,
+  TimelineTourWelcome,
   type TimelineTourStep,
 } from './TimelineTour'
 

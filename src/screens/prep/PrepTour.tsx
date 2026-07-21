@@ -3,12 +3,6 @@ import {
   FeatureTourCoach,
   FeatureTourWelcome,
   TourScrim,
-  SpotlightRing,
-  coachStyleAbove,
-  coachStyleBelow,
-  useSpotlightBox,
-  TourCaret,
-  type SpotlightBox,
 } from '../../components/featureTour'
 
 /** Figma 2929:7333 — First time intro · Appointment Prep */
@@ -51,15 +45,7 @@ export const PREP_TOUR_STEPS: Record<
   },
 }
 
-export {
-  TourScrim as PrepTourScrim,
-  SpotlightRing,
-  coachStyleAbove,
-  coachStyleBelow,
-  useSpotlightBox,
-  TourCaret,
-  type SpotlightBox,
-}
+export { TourScrim as PrepTourScrim }
 
 export function PrepTourWelcome({
   onStart,

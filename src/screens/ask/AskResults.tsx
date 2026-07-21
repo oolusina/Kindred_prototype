@@ -19,13 +19,15 @@ import expandMore from '../../assets/figma/expand-more.svg'
 import RollingGhostPrompt from './RollingGhostPrompt'
 import { markTourSeen, tourSeen, TOUR_ASK } from '../timeline/tour'
 import {
-  AskTourCoach,
-  AskTourScrim,
   SpotlightRing,
   TourCaret,
   coachStyleAbove,
   coachStyleBelow,
   useSpotlightBox,
+} from '../../components/featureTour'
+import {
+  AskTourCoach,
+  AskTourScrim,
   type AskTourStep,
 } from './AskTour'
 

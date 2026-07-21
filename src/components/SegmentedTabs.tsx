@@ -1,4 +1,5 @@
 import { useRef, useState, useLayoutEffect, type ReactNode } from 'react'
+import { getLocalScale } from '../lib/scale'
 
 type Option<T extends string> = {
   value: T
@@ -29,12 +30,33 @@ export default function SegmentedTabs<T extends string>({
   )
 
   useLayoutEffect(() => {
-    const btn = btnRefs.current[activeIndex]
     const track = trackRef.current
-    if (!btn || !track) return
-    const trackBox = track.getBoundingClientRect()
-    const btnBox = btn.getBoundingClientRect()
-    setPill({ left: btnBox.left - trackBox.left, width: btnBox.width })
+    if (!track) return
+
+    const measure = () => {
+      const btn = btnRefs.current[activeIndex]
+      if (!btn) return
+      const trackBox = track.getBoundingClientRect()
+      const btnBox = btn.getBoundingClientRect()
+      // getBoundingClientRect returns real (post-transform) pixels — divide out any
+      // ancestor CSS scale (e.g. the mobile shell's zoom-out) before using them as
+      // `position: absolute` values in this same transformed subtree, or the pill
+      // renders at a fraction of the real tab's size/offset. See src/lib/scale.ts.
+      const scale = getLocalScale(track)
+      setPill({
+        left: (btnBox.left - trackBox.left) / scale,
+        width: btnBox.width / scale,
+      })
+    }
+
+    measure()
+    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(measure) : null
+    ro?.observe(track)
+    window.addEventListener('resize', measure)
+    return () => {
+      ro?.disconnect()
+      window.removeEventListener('resize', measure)
+    }
   }, [activeIndex, options.length, size])
 
   const pad = size === 'sm' ? 'p-1' : 'p-1'

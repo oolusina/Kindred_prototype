@@ -28,7 +28,7 @@ export default function CoachMark({
 }) {
   return (
     <div
-      className={`absolute z-50 flex w-[320px] flex-col gap-2 rounded-[16px] bg-white px-4 pb-3.5 pt-4 drop-shadow-[0px_6px_12px_rgba(0,0,0,0.18)] ${className}`}
+      className={`absolute z-50 flex w-[min(320px,calc(100%-32px))] flex-col gap-2 rounded-[16px] bg-white px-4 pb-3.5 pt-4 drop-shadow-[0px_6px_12px_rgba(0,0,0,0.18)] ${className}`}
       style={style}
     >
       {children}

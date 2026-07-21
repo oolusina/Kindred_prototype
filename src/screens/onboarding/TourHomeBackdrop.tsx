@@ -1,3 +1,4 @@
+import type { RefObject } from 'react'
 import SystemBar from '../../components/SystemBar'
 import NavBar from '../../components/NavBar'
 import autoAwesome from '../../assets/figma/home_auto_awesome.svg'
@@ -12,8 +13,17 @@ import editBlue from '../../assets/figma/edit-blue.svg'
  */
 export default function TourHomeBackdrop({
   spotlightVerifyCard = false,
+  verifyCardRef,
+  addButtonRef,
+  onAddClick,
 }: {
   spotlightVerifyCard?: boolean
+  /** Lets the tour step measure the real card position instead of a guessed offset. */
+  verifyCardRef?: RefObject<HTMLDivElement | null>
+  /** Lets the tour step measure the real + button instead of drawing a duplicate on top of it. */
+  addButtonRef?: RefObject<HTMLButtonElement | null>
+  /** Keeps the real + button clickable during the tour instead of a separate floating copy. */
+  onAddClick?: () => void
 }) {
   return (
     <div className="absolute inset-0 flex flex-col bg-canvas">
@@ -49,6 +59,7 @@ export default function TourHomeBackdrop({
       </div>
       <div className="flex flex-col gap-4 px-[22px] pt-[18px]">
         <div
+          ref={verifyCardRef}
           className={`flex h-[70px] w-full items-center rounded-card border border-[#f0c519] bg-[#faecb5] px-5 text-left ${
             spotlightVerifyCard ? 'relative z-50' : ''
           }`}
@@ -74,7 +85,7 @@ export default function TourHomeBackdrop({
           </div>
         </div>
       </div>
-      <NavBar tab="home" locked />
+      <NavBar tab="home" locked addButtonRef={addButtonRef} onAddOverride={onAddClick} />
     </div>
   )
 }
