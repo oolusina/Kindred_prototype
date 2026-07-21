@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import { useSmartBack } from '../../navigation/history'
 import SystemBar from '../../components/SystemBar'
 import HomeIndicator from '../../components/HomeIndicator'
 import arrowBack from '../../assets/figma/arrow-back.svg'
@@ -9,6 +10,7 @@ import personBlue from '../../assets/figma/person-blue.svg'
 
 export default function LookingAhead() {
   const navigate = useNavigate()
+  const goBack = useSmartBack('/timeline')
   return (
     <div className="relative flex h-full w-full flex-col bg-canvas">
       <SystemBar />
@@ -16,7 +18,7 @@ export default function LookingAhead() {
         <button
           type="button"
           aria-label="Back"
-          onClick={() => navigate('/timeline')}
+          onClick={goBack}
           className="mb-1.5 cursor-pointer self-start"
         >
           <img src={arrowBack} alt="" className="size-[26px]" />

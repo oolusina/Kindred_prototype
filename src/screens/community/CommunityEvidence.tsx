@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import { useSmartBack } from '../../navigation/history'
 import SystemBar from '../../components/SystemBar'
 import HomeIndicator from '../../components/HomeIndicator'
 import arrowBack from '../../assets/figma/arrow-back.svg'
@@ -13,6 +14,7 @@ const BARS = [
 
 export default function CommunityEvidence() {
   const navigate = useNavigate()
+  const goBack = useSmartBack('/community/response')
 
   return (
     <div className="relative flex h-full w-full flex-col bg-canvas">
@@ -21,7 +23,7 @@ export default function CommunityEvidence() {
         <button
           type="button"
           aria-label="Back"
-          onClick={() => navigate('/community/response')}
+          onClick={goBack}
           className="cursor-pointer"
         >
           <img src={arrowBack} alt="" className="size-[26px]" />

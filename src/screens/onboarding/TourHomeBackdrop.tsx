@@ -16,6 +16,8 @@ export default function TourHomeBackdrop({
   verifyCardRef,
   addButtonRef,
   onAddClick,
+  addIcon,
+  addLabel,
 }: {
   spotlightVerifyCard?: boolean
   /** Lets the tour step measure the real card position instead of a guessed offset. */
@@ -24,6 +26,10 @@ export default function TourHomeBackdrop({
   addButtonRef?: RefObject<HTMLButtonElement | null>
   /** Keeps the real + button clickable during the tour instead of a separate floating copy. */
   onAddClick?: () => void
+  /** Swaps the real + button's icon while onAddClick is active, e.g. to a close icon. */
+  addIcon?: string
+  /** Swaps the real + button's aria-label while onAddClick is active. */
+  addLabel?: string
 }) {
   return (
     <div className="absolute inset-0 flex flex-col bg-canvas">
@@ -85,7 +91,14 @@ export default function TourHomeBackdrop({
           </div>
         </div>
       </div>
-      <NavBar tab="home" locked addButtonRef={addButtonRef} onAddOverride={onAddClick} />
+      <NavBar
+        tab="home"
+        locked
+        addButtonRef={addButtonRef}
+        onAddOverride={onAddClick}
+        addIconOverride={addIcon}
+        addLabelOverride={addLabel}
+      />
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { useSmartBack, useReplaceNavigate } from '../../navigation/history'
 import SystemBar from '../../components/SystemBar'
 import HomeIndicator from '../../components/HomeIndicator'
 import Sheet from '../../components/Sheet'
@@ -61,11 +62,13 @@ const SOURCES: SavedSource[] = [
 /** Figma 3139:8265 — step 2 (Simple vs Detailed). */
 export default function LearnModule() {
   const navigate = useNavigate()
+  const replaceNavigate = useReplaceNavigate()
   const location = useLocation()
   const resumeStep = (location.state as { tourStep?: LearnTourStep } | null)?.tourStep
   const { isSourceSaved, toggleSavedSource } = usePrototypeState()
   const rootRef = useRef<HTMLDivElement>(null)
   const depthRef = useRef<HTMLDivElement>(null)
+  const goBack = useSmartBack('/learn')
   const [mode, setMode] = useState<'simple' | 'detailed'>('simple')
   const [sourcesOpen, setSourcesOpen] = useState(false)
   const [done, setDone] = useState(false)
@@ -91,7 +94,7 @@ export default function LearnModule() {
         <button
           type="button"
           aria-label="Back"
-          onClick={() => !touring && navigate('/learn')}
+          onClick={() => !touring && goBack()}
           className="cursor-pointer"
         >
           <img src={arrowBack} alt="" className="size-[26px]" />
@@ -110,7 +113,7 @@ export default function LearnModule() {
             onChange={(next) => {
               if (touring) return
               if (next === 'detailed') {
-                navigate('/learn/module/step-1')
+                replaceNavigate('/learn/module/step-1')
                 return
               }
               setMode(next)

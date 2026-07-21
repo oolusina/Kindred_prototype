@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useSmartBack } from '../../navigation/history'
 import SystemBar from '../../components/SystemBar'
 import HomeIndicator from '../../components/HomeIndicator'
 import arrowBack from '../../assets/figma/arrow-back.svg'
@@ -57,6 +58,7 @@ const addWidgets = [
 
 export default function HomeCustomize() {
   const navigate = useNavigate()
+  const goBack = useSmartBack('/home')
   const { homeWidgets: toggles, setHomeWidget } = usePrototypeState()
   const [added, setAdded] = useState<Record<string, boolean>>(() => {
     try {
@@ -79,7 +81,7 @@ export default function HomeCustomize() {
           <button
             type="button"
             aria-label="Back"
-            onClick={() => navigate('/home')}
+            onClick={goBack}
             className="cursor-pointer"
           >
             <img src={arrowBack} alt="" className="size-[26px]" />

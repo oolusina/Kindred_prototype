@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import { useSmartBack } from '../../navigation/history'
 import SystemBar from '../../components/SystemBar'
 import HomeIndicator from '../../components/HomeIndicator'
 import arrowBackWhite from '../../assets/figma/arrow-back-white.svg'
@@ -28,6 +29,7 @@ const QUESTIONS = [
 /** Figma 2356:3491 — Community · Explore (read-only) */
 export default function CommunityExplore() {
   const navigate = useNavigate()
+  const goBack = useSmartBack('/community/browse')
 
   return (
     <div className="relative flex h-full w-full flex-col bg-canvas">
@@ -37,7 +39,7 @@ export default function CommunityExplore() {
           <button
             type="button"
             aria-label="Back"
-            onClick={() => navigate('/community/browse')}
+            onClick={goBack}
             className="cursor-pointer self-start"
           >
             <img src={arrowBackWhite} alt="" className="size-[26px]" />

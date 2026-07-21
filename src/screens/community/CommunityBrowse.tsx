@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useSmartBack } from '../../navigation/history'
 import SystemBar from '../../components/SystemBar'
 import HomeIndicator from '../../components/HomeIndicator'
 import arrowBackWhite from '../../assets/figma/arrow-back-white.svg'
@@ -12,6 +13,7 @@ import medicalWhite from '../../assets/figma/medical-services-white-sm.svg'
 
 export default function CommunityBrowse() {
   const navigate = useNavigate()
+  const goBack = useSmartBack('/community')
   const [query, setQuery] = useState('')
 
   return (
@@ -22,7 +24,7 @@ export default function CommunityBrowse() {
           <button
             type="button"
             aria-label="Back"
-            onClick={() => navigate('/community')}
+            onClick={goBack}
             className="cursor-pointer self-start"
           >
             <img src={arrowBackWhite} alt="" className="size-[26px]" />

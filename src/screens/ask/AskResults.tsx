@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef, useState, type RefObject } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { useSmartBack } from '../../navigation/history'
 import SystemBar from '../../components/SystemBar'
 import HomeIndicator from '../../components/HomeIndicator'
 import Sheet from '../../components/Sheet'
@@ -135,6 +136,7 @@ const SHEET_SOURCES = [
 /** Figma 3142:8272 — Results tab panels + tour steps 3–5. */
 export default function AskResults() {
   const navigate = useNavigate()
+  const goBack = useSmartBack('/ask')
   const location = useLocation()
   const state = location.state as { q?: string; tourStep?: AskTourStep } | null
   const q = state?.q ?? 'What low-sugar snacks are kidney-safe?'
@@ -223,7 +225,7 @@ export default function AskResults() {
         <button
           type="button"
           aria-label="Back"
-          onClick={() => (touring ? dismissTour() : navigate('/ask'))}
+          onClick={() => (touring ? dismissTour() : goBack())}
           className="cursor-pointer"
         >
           <img src={arrowBack} alt="" className="size-[22px]" />

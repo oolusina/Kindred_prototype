@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { useSmartBack } from '../../navigation/history'
 import SystemBar from '../../components/SystemBar'
 import HomeIndicator from '../../components/HomeIndicator'
 import Sheet from '../../components/Sheet'
@@ -20,6 +21,7 @@ const FOLLOW_UP_GHOSTS = [
 
 export default function AskChat() {
   const navigate = useNavigate()
+  const goBack = useSmartBack('/ask/results')
   const location = useLocation()
   const q =
     (location.state as { q?: string } | null)?.q ?? 'What low-sugar snacks are kidney-safe?'
@@ -51,7 +53,7 @@ export default function AskChat() {
     <div className="relative flex h-full w-full flex-col bg-canvas">
       <SystemBar />
       <div className="flex h-14 shrink-0 items-center justify-between px-5">
-        <button type="button" aria-label="Back" onClick={() => navigate('/ask/results')} className="cursor-pointer">
+        <button type="button" aria-label="Back" onClick={goBack} className="cursor-pointer">
           <img src={arrowBack} alt="" className="size-[22px]" />
         </button>
         <p className="font-sans text-[15px] font-medium text-ink">Follow-up</p>

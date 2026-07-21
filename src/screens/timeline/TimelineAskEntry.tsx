@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useSmartBack } from '../../navigation/history'
 import SystemBar from '../../components/SystemBar'
 import NavBar from '../../components/NavBar'
 import arrowBack from '../../assets/figma/arrow-back.svg'
@@ -23,6 +24,7 @@ const RECENT = [
 
 export default function TimelineAskEntry() {
   const navigate = useNavigate()
+  const goBack = useSmartBack('/timeline')
   const [q, setQ] = useState('')
   return (
     <div className="relative flex h-full w-full flex-col bg-canvas">
@@ -32,7 +34,7 @@ export default function TimelineAskEntry() {
           <button
             type="button"
             aria-label="Back"
-            onClick={() => navigate('/timeline')}
+            onClick={goBack}
             className="mb-1 cursor-pointer self-start"
           >
             <img src={arrowBack} alt="" className="size-6 brightness-0 invert" />

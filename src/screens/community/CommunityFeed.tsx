@@ -248,7 +248,7 @@ export default function CommunityFeed() {
                     if (touring) return
                     navigate(item.to)
                   }}
-                  className={`flex w-full cursor-pointer flex-col gap-2 rounded-2xl border border-accent-100 bg-card px-4 py-3.5 text-left ${
+                  className={`flex w-full shrink-0 cursor-pointer flex-col gap-2 rounded-2xl border border-accent-100 bg-card px-4 py-3.5 text-left ${
                     tourStep === 3 && i === 0 ? 'relative z-[60]' : ''
                   }`}
                 >
@@ -274,7 +274,7 @@ export default function CommunityFeed() {
                   key={item.text}
                   type="button"
                   onClick={() => !touring && navigate(item.to)}
-                  className="flex w-full cursor-pointer flex-col overflow-hidden rounded-2xl border border-accent-200 bg-accent-50 text-left"
+                  className="flex w-full shrink-0 cursor-pointer flex-col overflow-hidden rounded-2xl border border-accent-200 bg-accent-50 text-left"
                 >
                   <div className="flex items-center justify-between bg-accent-subtle px-4 py-2">
                     <span className="flex items-center gap-1.5">

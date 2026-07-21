@@ -58,6 +58,8 @@ export default function NavBar({
   timelineTabRef,
   addButtonRef,
   onAddOverride,
+  addIconOverride,
+  addLabelOverride,
 }: {
   tab: NavTab
   /** When true, tabs and + do nothing (used during onboarding tours). */
@@ -69,6 +71,10 @@ export default function NavBar({
   addButtonRef?: RefObject<HTMLButtonElement | null>
   /** Keeps the + button clickable with a custom handler even while locked, e.g. mid-onboarding-tour. */
   onAddOverride?: () => void
+  /** Swaps the + button's icon while overridden, e.g. to a close icon for a "back out" action. */
+  addIconOverride?: string
+  /** Swaps the + button's aria-label while overridden. */
+  addLabelOverride?: string
 }) {
   const navigate = useNavigate()
   const { isOpen, toggle, close } = useAddMenu()
@@ -115,12 +121,12 @@ export default function NavBar({
             ref={addButtonRef}
             type="button"
             onClick={addOverridden ? onAddOverride : locked ? undefined : toggle}
-            aria-label={isOpen ? 'Close' : 'Add'}
+            aria-label={addOverridden ? (addLabelOverride ?? 'Add') : isOpen ? 'Close' : 'Add'}
             disabled={locked && !addOverridden}
             className="absolute -top-[30px] left-0 flex size-[67px] items-center justify-center rounded-full border-[5px] border-canvas bg-accent drop-shadow-[0px_6px_7px_rgba(0,43,143,0.35)] transition-transform duration-300 disabled:cursor-default"
           >
             <img
-              src={isOpen ? closeWhite : addIcon}
+              src={addOverridden ? (addIconOverride ?? addIcon) : isOpen ? closeWhite : addIcon}
               alt=""
               className={`size-7 transition-transform duration-300 ${isOpen ? 'rotate-90' : 'rotate-0'}`}
             />
