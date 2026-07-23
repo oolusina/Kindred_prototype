@@ -110,12 +110,7 @@ export default function AddMenuOverlay() {
           <div className="flex w-full gap-3">
             <Tile
               icon={medicalServices}
-              label={
-                <>
-                  Upload a<br />
-                  diagnosis
-                </>
-              }
+              label="Upload a document"}
               onClick={() => go('/upload')}
             />
             <Tile icon={link} label="Connect a source" onClick={() => go('/connect')} />
