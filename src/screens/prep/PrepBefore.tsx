@@ -1,8 +1,9 @@
 import { useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { PrepHeader, PrepFooter, Tag } from './shared'
+import CommunityAiOverviewSheet from '../community/CommunityAiOverviewSheet'
 import chevronRight from '../../assets/figma/chevron-right-gray.svg'
-import editBlue from '../../assets/figma/edit-blue-prep.svg'
+import visibilityBlue from '../../assets/figma/visibility-blue.svg'
 import groupsBlue from '../../assets/figma/groups-blue-prep.svg'
 import pictureAsPdf from '../../assets/figma/picture-as-pdf.svg'
 import { usePrototypeState } from '../../state/PrototypeState'
@@ -30,6 +31,7 @@ export default function PrepBefore() {
   const rootRef = useRef<HTMLDivElement>(null)
   const questionsRef = useRef<HTMLDivElement>(null)
   const sendRef = useRef<HTMLDivElement>(null)
+  const [discussionSheetOpen, setDiscussionSheetOpen] = useState(false)
 
   const [tourStep, setTourStep] = useState<PrepTourStep | -1>(() => {
     if (tourSeen(TOUR_PREP)) return -1
@@ -76,7 +78,7 @@ export default function PrepBefore() {
                 {q.kind === 'community' ? (
                   <button
                     type="button"
-                    onClick={() => !touring && navigate('/community/response')}
+                    onClick={() => !touring && setDiscussionSheetOpen(true)}
                     className="flex w-full cursor-pointer items-center justify-between py-3.5 text-left"
                   >
                     <div className="flex min-w-0 flex-1 flex-col gap-1.5">
@@ -122,7 +124,7 @@ export default function PrepBefore() {
               onClick={() => !touring && navigate('/prep/brief')}
               className="flex flex-1 cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border border-[rgba(0,43,143,0.1)] bg-card px-1.5 py-3.5"
             >
-              <img src={editBlue} alt="" className="size-5" />
+              <img src={visibilityBlue} alt="" className="size-5" />
               <span className="font-sans text-[11.5px] font-medium text-accent">Show in app</span>
             </button>
             <button
@@ -195,6 +197,15 @@ export default function PrepBefore() {
           )}
         </div>
       )}
+
+      <CommunityAiOverviewSheet
+        open={discussionSheetOpen}
+        onClose={() => setDiscussionSheetOpen(false)}
+        onSeeDiscussion={() => {
+          setDiscussionSheetOpen(false)
+          navigate('/community/response')
+        }}
+      />
     </div>
   )
 }

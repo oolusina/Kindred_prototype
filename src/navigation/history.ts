@@ -1,5 +1,11 @@
 import { useCallback, useEffect } from 'react'
-import { useLocation, useNavigate, type NavigateOptions, type To } from 'react-router-dom'
+import {
+  useLocation,
+  useNavigate,
+  useNavigationType,
+  type NavigateOptions,
+  type To,
+} from 'react-router-dom'
 import { stripShellPrefix } from './shell'
 
 /** True when React Router has an earlier entry in this tab's history stack. */
@@ -53,15 +59,21 @@ let lastPathname = '/'
  */
 export function PrepShellHistoryTracker() {
   const location = useLocation()
+  const navigationType = useNavigationType()
 
   useEffect(() => {
     const path = location.pathname
     const lastBare = stripShellPrefix(lastPathname)
-    if (isPrepShellPath(path) && !lastBare.startsWith('/prep')) {
+    // Only remember the entry point on a genuine forward navigation (PUSH) into
+    // the shell. A POP landing on /prep means the user is returning via the
+    // browser's own Back button from a screen they pushed FROM prep — treating
+    // that as a fresh "entered from here" would overwrite the real entry point
+    // and, combined with usePrepShellBack, ping-pong forever between the two.
+    if (isPrepShellPath(path) && !lastBare.startsWith('/prep') && navigationType === 'PUSH') {
       sessionStorage.setItem(PREP_SHELL_RETURN_KEY, lastPathname || '/home')
     }
     lastPathname = path
-  }, [location.pathname])
+  }, [location.pathname, navigationType])
 
   return null
 }
@@ -70,6 +82,10 @@ export function PrepShellHistoryTracker() {
 export function usePrepShellBack(fallback = '/home') {
   const navigate = useNavigate()
   return useCallback(() => {
+    if (canGoBack()) {
+      navigate(-1)
+      return
+    }
     const returnTo = sessionStorage.getItem(PREP_SHELL_RETURN_KEY) || fallback
     navigate(returnTo)
   }, [navigate, fallback])
