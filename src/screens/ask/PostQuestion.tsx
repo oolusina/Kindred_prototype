@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useSmartBack } from '../../navigation/history'
 import SystemBar from '../../components/SystemBar'
 import HomeIndicator from '../../components/HomeIndicator'
 import SegmentedTabs from '../../components/SegmentedTabs'
@@ -27,6 +28,7 @@ const TAGS = ['Diet', 'Snacks', 'CKD Stage 3'] as const
 /** Figma 2165:1488 Question + 2923:7314 Tip — Share to community. */
 export default function PostQuestion({ initialMode = 'Question' }: { initialMode?: PostAs }) {
   const navigate = useNavigate()
+  const goBack = useSmartBack('/ask/results')
   const [mode, setMode] = useState<PostAs>(initialMode)
   const [text, setText] = useState(initialMode === 'Tip' ? TIP_DEFAULT : QUESTION_DEFAULT)
   const [includeAi, setIncludeAi] = useState(initialMode === 'Tip')
@@ -83,7 +85,7 @@ export default function PostQuestion({ initialMode = 'Question' }: { initialMode
         <button
           type="button"
           aria-label="Close"
-          onClick={() => navigate('/ask/results')}
+          onClick={goBack}
           className="cursor-pointer"
         >
           <img src={closeInk} alt="" className="size-[22px]" />

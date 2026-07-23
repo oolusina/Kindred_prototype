@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useSmartBack } from '../../navigation/history'
 import SystemBar from '../../components/SystemBar'
 import HomeIndicator from '../../components/HomeIndicator'
 import closeInk from '../../assets/figma/close-ink.svg'
@@ -11,6 +12,7 @@ const PRESET_TAGS = ['Diet', 'Medication', 'Symptoms']
 
 export default function CommunityNew() {
   const navigate = useNavigate()
+  const goBack = useSmartBack('/community')
   const [question, setQuestion] = useState('')
   const [tags, setTags] = useState(['Diet'])
   const [customTags, setCustomTags] = useState<string[]>([])
@@ -45,7 +47,7 @@ export default function CommunityNew() {
         <button
           type="button"
           aria-label="Close"
-          onClick={() => navigate('/community')}
+          onClick={goBack}
           className="cursor-pointer"
         >
           <img src={closeInk} alt="" className="size-[26px]" />

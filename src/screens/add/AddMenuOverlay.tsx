@@ -108,16 +108,7 @@ export default function AddMenuOverlay() {
             <Tile icon={editBlue} label="Daily log" onClick={() => go('/log')} />
           </div>
           <div className="flex w-full gap-3">
-            <Tile
-              icon={medicalServices}
-              label={
-                <>
-                  Upload a<br />
-                  diagnosis
-                </>
-              }
-              onClick={() => go('/upload')}
-            />
+            <Tile icon={medicalServices} label="Upload a document" onClick={() => go('/upload')}/>
             <Tile icon={link} label="Connect a source" onClick={() => go('/connect')} />
             <Tile icon={history} label="Past entries" onClick={() => go('/log/today')} />
           </div>
